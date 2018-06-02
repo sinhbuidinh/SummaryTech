@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/ddd', 'DomainDrivenDesignController@index')->name('ddd');
+
+Route::prefix('article')->namespace('Article')->name('article')->group(function () {
+    Route::get('create_type', 'ArticleTypeController@create')->name('_create_type');
+});
