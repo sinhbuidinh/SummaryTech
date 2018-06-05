@@ -7,6 +7,7 @@ After pull running follow step:
 1. composer install
 2. php artisan key:generate
 3. Add vhost
+
 [code]
 <VirtualHost *:80>
     ServerName techs-local.vn
@@ -19,8 +20,11 @@ After pull running follow step:
     </Directory>
 </VirtualHost>
 [/code]
+
 4. Add hosts in C:\Windows\System32\drivers\etc
+
 [code]127.0.0.1 techs-local.vn[/code]
+
 5. Reset apache.
 6. Access http://techs-local.vn in browser and see result.
 
