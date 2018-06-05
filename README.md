@@ -9,15 +9,25 @@ After pull running follow step:
 3. Add vhost
 
 <VirtualHost *:80>
+
     ServerName techs-local.vn
+    
     DocumentRoot "__YOUR_LOCATION_CODE__/techs/public/"
+    
     <Directory "__YOUR_LOCATION__/techs/public/">
+    
         DirectoryIndex index.php
+        
         AllowOverride All
+        
         Order allow,deny
+        
         Allow from all
+        
     </Directory>
+    
 </VirtualHost>
+
 
 4. Add hosts in C:\Windows\System32\drivers\etc
 
