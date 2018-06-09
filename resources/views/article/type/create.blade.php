@@ -15,7 +15,9 @@
 <div class="w3-row w3-white">
     <div class="w3-col l10 m12" id='main'>
         <!-- real data -->
-        <form class="form-horizontal" action="{{ route('article_create_type') }}">
+        <form class="form-horizontal" 
+              action="{{ route('article_create_type') }}"
+              method="post">
             @csrf
             <div class="row">
                 <label class="control-label col-sm-2" for="article_name">Name:</label>

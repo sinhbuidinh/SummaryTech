@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 class ArticleTypeController
 {
+    private $article_type_service;
+
+    public function __construct()
+    {
+        $this->article_type_service = getService('article_type_service');
+    }
+
     public function index()
     {
         //display all article type
@@ -13,20 +20,7 @@ class ArticleTypeController
 
     public function create(Request $request)
     {
-        //get form data
-        $data_form = $request->all();
-
-        //create data
-        $data = [
-            'article_type_form' => [
-                'name' => '',
-                'lang_id' => 0
-            ]
-        ];
-
-        if (!empty($data_form)) {
-            $data = array_merge($data, $data_form);
-        }
+        $data = $this->article_type_service->processData($request);
 
         return view('article.type.create', $data);
     }

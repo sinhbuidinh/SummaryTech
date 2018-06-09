@@ -1,3 +1,3 @@
 <?php
 
-include_once 'generalHelper.php';
+include_once 'GeneralHelper.php';
