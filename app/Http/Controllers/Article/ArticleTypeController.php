@@ -30,5 +30,4 @@ class ArticleTypeController
 
         return view('article.type.create', $data);
     }
-
 }
