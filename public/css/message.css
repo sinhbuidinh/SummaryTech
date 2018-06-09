@@ -1,0 +1,14 @@
+.fade.in {
+    opacity: 1 !important;
+}
+
+.message {
+    width: 100%;
+}
+
+.message .alert {
+    cursor: pointer;
+    height: 20px;
+    margin: 5px 15px;
+    padding: 8px 5px 8px 10px;
+}

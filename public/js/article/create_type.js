@@ -18,6 +18,8 @@ $(document).ready( function(){
 
         button.html(text_disp.trim());
     });
+
+    eventClickAlertMsg();
 });
 
 function setDropDownVal()
