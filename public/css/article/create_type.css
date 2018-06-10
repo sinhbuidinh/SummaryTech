@@ -1,3 +1,7 @@
 form.form-horizontal .row{
     margin: 10px 0px;
 }
+
+div.message *[id^="alert_"]{
+    display: block;
+}

@@ -36,7 +36,8 @@ class ArticleTypeService
 
         $request_data = $request->all();
 
-        $form_data = $request_data['article_type_form']?? [];
+        $begin_str_form = 'article_type_form';
+        $form_data = $request_data[$begin_str_form]?? [];
 
         if (empty($form_data)) {
             $result['result'] = false;
@@ -46,12 +47,12 @@ class ArticleTypeService
 
         if (empty($form_data['name'])) {
             $result['result'] = false;
-            $result['message'][MESSAGE_TYPE_ERROR]['name'] = 'Not have name';
+            $result['message'][MESSAGE_TYPE_ERROR][$begin_str_form.'_name'] = 'Not have name';
         }
 
         if (empty($form_data['lang_id'])) {
             $result['result'] = false;
-            $result['message'][MESSAGE_TYPE_ERROR]['lang_id'] = 'Please choose lang';
+            $result['message'][MESSAGE_TYPE_ERROR][$begin_str_form.'_lang_id'] = 'Please choose lang';
         }
 
         return $result;

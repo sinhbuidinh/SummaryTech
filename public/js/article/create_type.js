@@ -13,7 +13,7 @@
         $('input[name="article_type_form[lang_id]"]').val(li_clicked.val());
 
         //change text display
-        var button = li_clicked.parent('ul#lang_id').siblings('button#lang_disp');
+        var button = li_clicked.parent('ul#lang_id').siblings('button#article_type_form_lang_id');
         var text_disp = getDispNameOfLangId(li_clicked.val());
 
         button.html(text_disp.trim());
@@ -29,7 +29,7 @@ function setDropDownVal()
     $(str_li_active).addClass('active');
     //change text button dropdown display
     var lang_name = getDispNameOfLangId(lang_id_val);
-    $('button#lang_disp').html(lang_name.trim());
+    $('button#article_type_form_lang_id').html(lang_name.trim());
 }
 
 function getDispNameOfLangId(lang_id)

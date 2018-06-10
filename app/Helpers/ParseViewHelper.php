@@ -29,10 +29,10 @@ function parseMessageByType($type, $msg_val)
     $message_return = '';
 //    dd($msg_val);
     foreach ($msg_val as $selector_element => $msg) {
-        $message_return .= '<div id="alert_' . $selector_element . '" class="' . $class . ' fade in" data-selector="' . $selector_element . '">';
+        $message_return .= '<label id="alert_' . $selector_element . '" class="' . $class . ' fade in" for="' . $selector_element . '">';
         $message_return .= '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
         $message_return .= $msg;
-        $message_return .= '</div>';
+        $message_return .= '</label>';
     }
 
     return $message_return;

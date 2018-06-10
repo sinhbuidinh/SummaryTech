@@ -31,7 +31,7 @@
                     <div class="col-sm-5">
                       <input type="text"
                              class="form-control"
-                             id="article_name"
+                             id="article_type_form_name"
                              name="article_type_form[name]"
                              placeholder="Input article type name"
                              value="{{ old('article_type_form[name]', $article_type_form['name']) }}"/>
@@ -40,7 +40,7 @@
                 <div class="row">
                     <label class="control-label col-sm-2" for="lang_disp">Lang:</label>
                     <div class="dropdown col-sm-5">
-                        <button id="lang_disp"
+                        <button id="article_type_form_lang_id"
                                 class="btn btn-default dropdown-toggle"
                                 type="button"
                                 data-toggle="dropdown">Languages</button>
