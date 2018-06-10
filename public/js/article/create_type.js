@@ -1,4 +1,4 @@
-$(document).ready( function(){
+(function($) {
     setDropDownVal();
 
     $('ul#lang_id li').click(function(){
@@ -18,9 +18,7 @@ $(document).ready( function(){
 
         button.html(text_disp.trim());
     });
-
-    eventClickAlertMsg();
-});
+}(jQuery));
 
 function setDropDownVal()
 {

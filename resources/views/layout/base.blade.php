@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ asset('css/top_nav.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/message.css') }}" />
         <!-- jQuery -->
-        <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+        <script src="{{ asset('js/jquery-1.12.4.min.js') }}"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="{{ asset('js/popper.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>

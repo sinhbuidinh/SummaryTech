@@ -1,12 +1,13 @@
 function eventClickAlertMsg()
 {
-    $(".alert").off("click");
-    $(".alert").unbind("click");
-    $(".alert").prop('onclick', null).off('click');
+    //find close btn
+    var btn_close = $(this).children('a.close');
 
-    $('.alert').bind('click', function() {
-        console.log('123123123');
-        var close_btn = $(this).children('a.close');
-        close_btn.click();
-    }(10));
+    //go to that element
+    var selector_go_to = $(this).attr('data-selector');
+
+    //click
+    if (btn_close.length > 0) {
+        btn_close.click();
+    }
 }
