@@ -13,7 +13,7 @@ class CreateArticleTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('article_type', function (Blueprint $table) {
+        Schema::create('article_types', function (Blueprint $table) {
             $table->increments('id');
             $table->tinyInteger('lang_id');
             $table->string('name', 100);
@@ -29,6 +29,6 @@ class CreateArticleTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_type');
+        Schema::dropIfExists('article_types');
     }
 }
