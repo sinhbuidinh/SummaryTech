@@ -2,8 +2,17 @@
 
 namespace App\Services;
 
+use App\Repositories\ArticleTypeRepository;
+
 class ArticleTypeService
 {
+    private $article_type_repository;
+
+    public function __construct()
+    {
+        $this->article_type_repository = new ArticleTypeRepository();
+    }
+
     //
     public function processData($request)
     {
@@ -13,6 +22,7 @@ class ArticleTypeService
         //create data
         $data = [
             'article_type_form' => [
+                'id' => null,
                 'name' => '',
                 'lang_id' => 0
             ]
@@ -24,7 +34,25 @@ class ArticleTypeService
 
         $data['validate_result'] = $this->validateArticleTypeForm($request);
 
+        if ($data['validate_result']['result'] === true) {
+            $this->insUpdArticleType($data);
+        }
+
         return $data;
+    }
+
+    private function insUpdArticleType($data)
+    {
+        //check ins or update
+        if (!isset($data['article_type_form']['id'])
+            || $data['article_type_form']['id'] === null
+        ) {
+            //insert
+            $data_form_last = $data['article_type_form'];
+        } else {
+            $data_form_last = $data['article_type_form'];
+        }
+        $data['result_process'] = $this->article_type_repository->insertOrUpdate($data_form_last, $data_form_last['id']?? null);
     }
 
     private function validateArticleTypeForm($request)
