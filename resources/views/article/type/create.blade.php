@@ -41,7 +41,7 @@
                     <label class="control-label col-sm-2" for="lang_disp">Lang:</label>
                     <div class="dropdown col-sm-5">
                         <button id="article_type_form_lang_id"
-                                class="btn btn-default dropdown-toggle"
+                                class="btn btn-primary dropdown-toggle"
                                 type="button"
                                 data-toggle="dropdown">Languages</button>
                         <ul class="dropdown-menu" id='lang_id'>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </div>
           </form>
