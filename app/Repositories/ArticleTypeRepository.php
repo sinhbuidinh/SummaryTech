@@ -21,8 +21,8 @@ class ArticleTypeRepository extends BaseRepository
         return [
             'result' => $this->baseInsertOrUpdate($article_type_data),
             'message' => [
-                'error' => $this->error,
-                'success' => $this->success
+                MESSAGE_TYPE_ERROR   => $this->error_msg,
+                MESSAGE_TYPE_SUCCESS => $this->success_msg
             ]
         ];
     }

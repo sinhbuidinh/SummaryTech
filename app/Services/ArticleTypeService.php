@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Repositories\ArticleTypeRepository;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
+
 class ArticleTypeService
 {
     private $article_type_repository;
@@ -34,11 +37,43 @@ class ArticleTypeService
 
         $data['validate_result'] = $this->validateArticleTypeForm($request);
 
-        if ($data['validate_result']['result'] === true) {
-            $this->insUpdArticleType($data);
+        $new_data = $data;
+        try {
+            DB::beginTransaction();
+            if ($data['validate_result']['result'] === true) {
+                $new_data = $this->insUpdArticleType($data);
+            }
+
+            //just get message success
+            $message = $new_data['result_process']['message'];
+            $new_data['message'][MESSAGE_TYPE_SUCCESS] = array_first(array_only($message, MESSAGE_TYPE_SUCCESS));
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            //unset data
+            if (isset($new_data['message'])) {
+                unset($new_data['message']);
+            }
+
+            //message process
+            $message = $new_data['result_process']['message'];
+            $error_msg = array_first(array_only($message, MESSAGE_TYPE_ERROR));
+
+            $new_data['result_process']['result'] = false;
+
+            if (empty($error_msg)) {
+                $new_data['result_process']['message'] = [
+                    MESSAGE_TYPE_ERROR => [
+                        0 => $e->getMessage()
+                    ]
+                ];
+            } else {
+                $new_data['result_process']['message'] = $error_msg;
+            }
         }
 
-        return $data;
+        return $new_data;
     }
 
     private function insUpdArticleType($data)
@@ -53,6 +88,8 @@ class ArticleTypeService
             $data_form_last = $data['article_type_form'];
         }
         $data['result_process'] = $this->article_type_repository->insertOrUpdate($data_form_last, $data_form_last['id']?? null);
+
+        return $data;
     }
 
     private function validateArticleTypeForm($request)
