@@ -19,7 +19,19 @@
 
         <div class="w3-main w3-light-grey" id="belowtopnav">
             <h1>@yield('title_page')</h1>
-            @yield('content')
+
+            <div class="w3-row w3-white">
+                <div class="w3-col l10 m12" id='main'>
+                    @if (!empty($message))
+                        <div class='row'>
+                            {!! parseMessage($message) !!}
+                        </div>
+                    @endif
+                    @yield('content')
+                </div>
+                <div class="w3-col l2 m12" id='right'></div>
+            </div>
+            <div class="footer w3-container w3-white" id='footer'></div>
         </div>
 
         @yield('custom_script')
