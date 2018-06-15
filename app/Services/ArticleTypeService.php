@@ -16,6 +16,13 @@ class ArticleTypeService
         $this->article_type_repository = new ArticleTypeRepository();
     }
 
+    public function getArticleTypeList()
+    {
+        $data['list'] = $this->article_type_repository->listAll();
+
+        return $data;
+    }
+
     //
     public function processData($request)
     {
@@ -45,8 +52,10 @@ class ArticleTypeService
             }
 
             //just get message success
-            $message = $new_data['result_process']['message'];
-            $new_data['message'][MESSAGE_TYPE_SUCCESS] = array_first(array_only($message, MESSAGE_TYPE_SUCCESS));
+            if (isset($new_data['result_process'])) {
+                $message = $new_data['result_process']['message'];
+                $new_data['message'][MESSAGE_TYPE_SUCCESS] = array_first(array_only($message, MESSAGE_TYPE_SUCCESS));
+            }
 
             DB::commit();
         } catch (Exception $e) {

@@ -1,7 +1,16 @@
-form.form-horizontal .row{
+form.form-horizontal .row,
+.list_article .row{
     margin: 10px 0px;
 }
 
 div.message *[id^="alert_"]{
     display: block;
+}
+
+div.row.disp_block {
+    display: block;
+}
+
+.list_article {
+    margin-left: 10px;
 }

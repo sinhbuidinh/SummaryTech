@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/top_nav.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/message.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/table_width.css') }}" />
         <!-- jQuery -->
         <script src="{{ asset('js/jquery-1.12.4.min.js') }}"></script>
         <!-- Bootstrap Core JavaScript -->

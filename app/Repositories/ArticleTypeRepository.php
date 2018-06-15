@@ -26,4 +26,9 @@ class ArticleTypeRepository extends BaseRepository
             ]
         ];
     }
+
+    public function listAll()
+    {
+        return $this->getList();
+    }
 }

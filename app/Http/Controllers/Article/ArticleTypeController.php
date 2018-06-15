@@ -16,9 +16,9 @@ class ArticleTypeController
     public function index()
     {
         //display all article type
+        $data = $this->article_type_service->getArticleTypeList();
 
-        echo "index list";
-        exit;
+        return view('article.type.show', $data);
     }
 
     public function create(Request $request)
