@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-<div class="row list_article">
+<div class="row list_article table-responsive">
     <table class="table table-bordered table-striped w80_percent">
         <thead>
           <tr>

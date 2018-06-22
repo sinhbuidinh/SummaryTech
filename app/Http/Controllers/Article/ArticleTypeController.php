@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Article;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController;
 
-class ArticleTypeController
+class ArticleTypeController extends BaseController
 {
     private $article_type_service;
 
     public function __construct()
     {
+        parent::__construct();
         $this->article_type_service = getService('article_type_service');
     }
 
@@ -17,6 +19,10 @@ class ArticleTypeController
     {
         //display all article type
         $data = $this->article_type_service->getArticleTypeList();
+
+        if (!empty($this->data)) {
+            $data = array_merge($data, $this->data);
+        }
 
         return view('article.type.show', $data);
     }
@@ -32,7 +38,8 @@ class ArticleTypeController
             //check result return
             if ($result_process['result'] == true) {
                 //disp flash succ msg
-                $request->session()->flash('message', $result_process['message']['success']);
+                $msg = array_except($result_process['message'], MESSAGE_TYPE_ERROR);
+                $request->session()->flash('message', $msg);
 
                 //go to list
                 return redirect(route('article_list_type', [], false));

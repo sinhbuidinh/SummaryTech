@@ -7,7 +7,7 @@ use App\Models\ArticleType;
 
 class ArticleTypeRepository extends BaseRepository
 {
-    protected $model;
+    public $model;
 
     public function __construct()
     {

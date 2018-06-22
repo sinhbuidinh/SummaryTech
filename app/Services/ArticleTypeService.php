@@ -6,10 +6,25 @@ use App\Repositories\ArticleTypeRepository;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Services\BaseService;
 
-class ArticleTypeService
+class ArticleTypeService extends BaseService
 {
     private $article_type_repository;
+
+    private $attr_accessor = [
+        'id',
+        'name',
+        'lang_id'
+    ];
+    
+    private $default_params = [
+        'id'      => null,
+        'name'    => '',
+        'lang_id' => 0
+    ];
+
+    private $form_name = 'article_type_form';
 
     public function __construct()
     {
@@ -30,18 +45,15 @@ class ArticleTypeService
         $data_form = $request->all();
 
         //create data
-        $data = [
-            'article_type_form' => [
-                'id' => null,
-                'name' => '',
-                'lang_id' => 0
-            ]
-        ];
+        $data = $this->initDataFrom($this->form_name, $this->attr_accessor, $this->default_params);
 
         if (!empty($data_form)) {
             $data = array_merge($data, $data_form);
         }
 
+        if (empty($request->all())) {
+            return $data;
+        }
         $data['validate_result'] = $this->validateArticleTypeForm($request);
 
         $new_data = $data;
