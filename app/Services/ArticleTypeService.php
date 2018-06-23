@@ -45,7 +45,8 @@ class ArticleTypeService extends BaseService
         $data_form = $request->all();
 
         //create data
-        $data = $this->initDataFrom($this->form_name, $this->attr_accessor, $this->default_params);
+        $this->initVariable($this->form_name, $this->attr_accessor, $this->default_params);
+        $data = $this->initFormData();
 
         if (!empty($data_form)) {
             $data = array_merge($data, $data_form);
