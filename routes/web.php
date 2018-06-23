@@ -23,3 +23,10 @@ Route::prefix('article')->namespace('Article')->name('article')->group(function 
 
     Route::get('', 'ArticleTypeController@index')->name('_list_type');
 });
+
+Route::prefix('product')->namespace('Product')->name('product')->group(function () {
+    Route::get('/', 'ProductsController@index')->name('_home');
+    Route::get('/list', 'ProductsController@index')->name('_list');
+
+    Route::get('/create', 'ProductsController@create')->name('_create');
+});
