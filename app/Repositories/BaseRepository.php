@@ -17,13 +17,24 @@ class BaseRepository
         $this->model = $model_obj;
     }
 
-    protected function getList($ids = [], $key_find = 'id')
+    protected function getList($ids = [], $order = [], $key_find = 'id')
     {
-        if (empty($ids)) {
-            return $this->model->get();
+        $order_str = 'id DESC';
+        if (!empty($order)) {
+            $order_str = implode(', ', $order);
         }
 
-        return $this->model->whereIn($key_find, $ids)->get();
+        if (empty($ids)) {
+            return $this->model
+                        ->selectRaw('*')
+                        ->orderByRaw($order_str)
+                        ->get();
+        }
+
+        return $this->model
+                    ->whereIn($key_find, $ids)
+                    ->orderByRaw($order_str)
+                    ->get();
     }
 
     protected function baseInsertOrUpdate($form_data, $primary_id = null)

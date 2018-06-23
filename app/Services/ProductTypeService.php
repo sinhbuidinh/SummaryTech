@@ -3,41 +3,25 @@
 namespace App\Services;
 
 use App\Services\BaseService;
-use App\Repositories\ProductRepository;
+use App\Repositories\ProductTypeRepository;
 
-class ProductService extends BaseService
+class ProductTypeService extends BaseService
 {
-    private $product_repository;
-    private $product_type_service;
+    private $product_type_repository;
 
     public function __construct()
     {
         $this->attr_accessor = [
-            'deck_type',
-            'code_name',
-            'is_foreign',
-            'color',
-            'unit_size',
-            'length',
-            'width',
-            'height'
+            'name',
         ];
 
         $this->default_params = [
-            'deck_type' => 0,
-            'code_name' => '',
-            'is_foreign' => 0,
-            'color' => 0,
-            'unit_size' => 'mm',
-            'length' => 0,
-            'width' => 0,
-            'height' => 0
+            'name' => '',
         ];
 
-        $this->form_name = 'product_form';
+        $this->form_name = 'product_type_form';
 
-        $this->product_repository = new ProductRepository();
-        $this->product_type_service = getService('product_type_service');
+        $this->product_type_repository = new ProductTypeRepository();
     }
 
     public function processData($request)
@@ -50,10 +34,9 @@ class ProductService extends BaseService
         $last_data = array_merge($data, $request_data);
         $last_data['form_name'] = $this->form_name;
 
-        $order = [
-            '`order` DESC'
-        ];
-        $last_data['product_type_list'] = $this->product_type_service->getListProductType($order);
+        //load list product type before
+        $list_product_type = $this->getListProductType();
+        $last_data['list_product_type_old'] = $list_product_type;
 
         if (!empty($last_data[$this->form_name]) 
             && $request->isMethod('post')
@@ -67,7 +50,7 @@ class ProductService extends BaseService
             }
 
             if ($result_validate['result'] == true) {
-                $result_insert = $this->insertProduct($form_data);
+                $result_insert = $this->insertProductType($form_data);
                 $last_data['message'] = $result_insert['message'];
             }
         }
@@ -75,12 +58,18 @@ class ProductService extends BaseService
         return $last_data;
     }
 
-    private function insertProduct($product_form_data)
+    public function getListProductType($order = [])
+    {
+        $product_type = $this->product_type_repository->listAll($order)->toArray();
+        return $product_type;
+    }
+
+    private function insertProductType($product_form_data)
     {
         //array only attr_accessor
         $data_insert = array_only($product_form_data, $this->attr_accessor);
 
-        $this->product_repository->insertOrUpdate($data_insert);
+        return $this->product_type_repository->insertOrUpdate($data_insert);
     }
 
     private function validateFormData($product_form_data)
@@ -90,9 +79,9 @@ class ProductService extends BaseService
             'message' => []
         ];
 
-        if (empty($product_form_data['deck_type'])) {
+        if (empty($product_form_data['name'])) {
             $result['result'] = false;
-            $result['message'][MESSAGE_TYPE_ERROR]['product_form_deck_type'] = 'Chọn loại ván';
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_name'] = 'Nhập tên loại ván';
         }
 
         return $result;

@@ -30,4 +30,7 @@ Route::prefix('product')->namespace('Product')->name('product')->group(function 
 
     Route::get('/create', 'ProductsController@create')->name('_create');
     Route::post('/create', 'ProductsController@create')->name('_create_post');
+
+    Route::get('/create_type', 'ProductsController@createType')->name('_create_type');
+    Route::post('/create_type', 'ProductsController@createType')->name('_create_type_post');
 });
