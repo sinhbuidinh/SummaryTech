@@ -33,8 +33,7 @@ class BaseRepository
                 $old_data = $this->model->find($primary_id);
 
                 //update
-                $old_data->name = $form_data['name'];
-                $old_data->lang_id = $form_data['lang_id'];
+                $this->settingDataByFormKey($form_data, $old_data);
 
                 $old_data->save();
                 $this->success_msg[] = 'Update success';
@@ -42,8 +41,7 @@ class BaseRepository
                 $new_data = $this->model;
 
                 //insert data
-                $new_data->name = $form_data['name'];
-                $new_data->lang_id = $form_data['lang_id'];
+                $this->settingDataByFormKey($form_data, $new_data);
 
                 $new_data->save();
                 $this->success_msg[] = 'Insert success';
@@ -55,5 +53,16 @@ class BaseRepository
 
             return false;
         }
+    }
+
+    private function settingDataByFormKey($form_data, &$obj)
+    {
+        if (!empty($form_data)) {
+            foreach ($form_data as $key => $value) {
+                $obj->$key = $value;
+            }
+        }
+
+        return $obj;
     }
 }

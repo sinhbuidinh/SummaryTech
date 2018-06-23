@@ -19,11 +19,13 @@
 <!-- real data -->
 <div class="row">
     <form class="form-horizontal"
-          action="{{ route('product_create') }}"
-          method="get">
+          action="{{ route('product_create_post') }}"
+          method="post"
+          style="width: 100%"
+          >
         @csrf
         <div class="row">
-            <label class="control-label col-sm-2" for="product_form_deck_type">Loại ép:</label>
+            <label class="control-label col-sm-2" for="product_form_deck_type">Loại ván ép:</label>
             <div class="col-sm-5">
                 <select name="product_form[deck_type]" id="product_form_deck_type">
                     <option value="0">Default</option>
@@ -90,6 +92,17 @@
                      name="product_form[height]"
                      placeholder="Input product height"
                      value="{{ old('product_form[height]', $product_form['height']) }}"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="control-label col-sm-2" for="product_form_unit_size">Đơn vị độ dài:</label>
+            <div class="col-sm-5">
+              <input type="text"
+                     class="form-control"
+                     id="product_form_unit_size"
+                     name="product_form[unit_size]"
+                     placeholder="Input product unit_size"
+                     value="{{ old('product_form[unit_size]', $product_form['unit_size']) }}"/>
             </div>
         </div>
         <!-- button -->
