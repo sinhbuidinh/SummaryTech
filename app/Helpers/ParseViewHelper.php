@@ -62,3 +62,17 @@ function parseClassByMsgType($msg_type)
 
     return $class;
 }
+
+function classOfLeftMenu($route_name, $parameters = [])
+{
+    //if action name = route
+    //get path of route name
+    $path_name_of_route = route($route_name, $parameters, null);
+    $path_request = '/'.request()->path();
+
+    if (strtolower($path_name_of_route) == strtolower($path_request)) {
+        return 'active';
+    }
+
+    return '';
+}
