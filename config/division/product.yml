@@ -1,0 +1,23 @@
+product_color:
+    code:
+        red: 1
+        blue: 2
+        green: 3
+        white: 4
+        black: 5
+        no_color: 6
+    name:
+        red: RED
+        blue: BLUE
+        green: GREEN
+        white: WHITE
+        black: BLACK
+        no_color: DEFAULT
+
+product_come_from:
+    code:
+        inside: 0
+        outside: 1
+    name:
+        inside: "Nội nhập"
+        outside: "Ngoại nhập"

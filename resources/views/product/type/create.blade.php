@@ -14,7 +14,7 @@
         @csrf
         @if (!empty($list_product_type_old))
         <div class="row">
-            <label class="control-label col-sm-4" for="{{ $form_name }}_form_name">Danh sách ván ép trước đó:</label>
+            <label class="control-label col-sm-4" for="{{ $form_name }}_form_name">Danh sách ván ép đã có:</label>
             <div class="col-sm-3">
                 <select>
                     @foreach ($list_product_type_old as $key => $val)

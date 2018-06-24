@@ -19,7 +19,9 @@ class ProductsController extends BaseController
 
     public function index(Request $request)
     {
-        $data = $request->all();
+        $data = $this->product_service->listProduct();
+        $data['request'] = $request->all();
+//        dd($data);
 
         //display all product
         return view('product.show', $data);

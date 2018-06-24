@@ -75,6 +75,21 @@ class ProductService extends BaseService
         return $last_data;
     }
 
+    public function listProduct()
+    {
+        $data['list'] = $this->product_repository->listAll();
+        $data['product_color'] = $this->getProductColorList();
+
+        return $data;
+    }
+
+    private function getProductColorList()
+    {
+        $result = getKubunCustom('division.product', 'product_color', $key = 'key', $value = 'code');
+
+        return $result;
+    }
+
     private function insertProduct($product_form_data)
     {
         //array only attr_accessor
