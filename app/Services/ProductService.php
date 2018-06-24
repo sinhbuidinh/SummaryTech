@@ -69,6 +69,7 @@ class ProductService extends BaseService
             if ($result_validate['result'] == true) {
                 $result_insert = $this->insertProduct($form_data);
                 $last_data['message'] = $result_insert['message'];
+                $last_data['result_insert'] = $result_insert['result'];
             }
         }
 
@@ -122,7 +123,7 @@ class ProductService extends BaseService
         //array only attr_accessor
         $data_insert = array_only($product_form_data, $this->attr_accessor);
 
-        $this->product_repository->insertOrUpdate($data_insert);
+        return $this->product_repository->insertOrUpdate($data_insert);
     }
 
     private function validateFormData($product_form_data)

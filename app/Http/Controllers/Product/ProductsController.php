@@ -30,12 +30,23 @@ class ProductsController extends BaseController
     {
         $data = $this->product_service->processData($request);
 
+        if ( isset($data['result_insert'])
+            && $data['result_insert'] == true
+        ) {
+            return redirect(route('product_list'));
+        }
+
         return view('product.create', $data);
     }
 
     public function createType(Request $request)
     {
         $data = $this->product_type_service->processData($request);
+        if ( isset($data['result_insert'])
+            && $data['result_insert'] == true
+        ) {
+            return redirect(route('product_create_type'));
+        }
 
         return view('product.type.create', $data);
     }

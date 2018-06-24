@@ -52,6 +52,7 @@ class ProductTypeService extends BaseService
             if ($result_validate['result'] == true) {
                 $result_insert = $this->insertProductType($form_data);
                 $last_data['message'] = $result_insert['message'];
+                $last_data['result_insert'] = $result_insert['result'];
             }
         }
 
