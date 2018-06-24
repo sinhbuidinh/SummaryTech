@@ -21,7 +21,6 @@ class ProductsController extends BaseController
     {
         $data = $this->product_service->listProduct();
         $data['request'] = $request->all();
-//        dd($data);
 
         //display all product
         return view('product.show', $data);

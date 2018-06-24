@@ -1,0 +1,18 @@
+.text-green {
+    background-color: green;
+}
+.text-red {
+    background-color: red;
+}
+.text-blue {
+    background-color: blue;
+}
+.text-white {
+    background-color: white;
+}
+.text-black {
+    background-color: black;
+}
+.text-no-color {
+    background-color: white;
+}

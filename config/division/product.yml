@@ -5,14 +5,14 @@ product_color:
         green: 3
         white: 4
         black: 5
-        no_color: 6
+        no_color: 0
     name:
         red: RED
         blue: BLUE
         green: GREEN
         white: WHITE
         black: BLACK
-        no_color: DEFAULT
+        no_color: NO-COLOR
 
 product_come_from:
     code:

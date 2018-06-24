@@ -4,10 +4,11 @@ function getKubunCustom(
     $link_config,
     $element,
     $key = CONFIG_ARR_BY_KEY,
-    $value = CONFIG_ARR_BY_NAME
+    $value = CONFIG_ARR_BY_NAME,
+    $only = []
 ) {
-    if (!in_array($key, CONFIG_ARR)
-        || !in_array($value, CONFIG_ARR)
+    if (!in_array($key, CONFIG_ARR_KEYS)
+        || !in_array($value, CONFIG_ARR_VALS)
     ) {
         return [];
     }
@@ -27,5 +28,21 @@ function getKubunCustom(
     //get result
     $result = array_get($yaml_contents, $element);
 
-    return $result;
+    //key = value of key default
+    $key_replace = array_keys($result[CONFIG_ARR_BY_CODE]);
+
+    //get key by $key
+    $keys = array_get($result, $key, $key_replace);
+    //get value by $value
+    $values = array_get($result, $value);
+
+    if (!empty($only)) {
+        $keys   = array_only($keys, $only);
+        $values = array_only($values, $only);
+    }
+
+    //combine to get array result
+    $key2val = array_combine($keys, $values);
+
+    return $key2val;
 }

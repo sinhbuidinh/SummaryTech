@@ -79,15 +79,42 @@ class ProductService extends BaseService
     {
         $data['list'] = $this->product_repository->listAll();
         $data['product_color'] = $this->getProductColorList();
+        $data['product_come_from'] = $this->getForeignLang();
+        $data['deck_type'] = $this->getDeckType();
 
         return $data;
     }
 
-    private function getProductColorList()
+    private function getDeckType()
     {
-        $result = getKubunCustom('division.product', 'product_color', $key = 'key', $value = 'code');
+        $deck_type = $this->product_type_service->getListProductType();
+
+        $result = [];
+        foreach ($deck_type as $val) {
+            $result[$val['id']] = $val;
+        }
 
         return $result;
+    }
+
+    private function getForeignLang()
+    {
+        $key = CONFIG_ARR_BY_CODE;
+        $val = CONFIG_ARR_BY_NAME;
+
+        $product_come_from = getKubunCustom('division.product', 'product_come_from', $key, $val);
+
+        return $product_come_from;
+    }
+
+    private function getProductColorList()
+    {
+        $key = CONFIG_ARR_BY_CODE;
+        $val = CONFIG_ARR_BY_NAME;
+
+        $product_color = getKubunCustom('division.product', 'product_color', $key, $val);
+
+        return $product_color;
     }
 
     private function insertProduct($product_form_data)

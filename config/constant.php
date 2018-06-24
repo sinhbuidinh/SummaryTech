@@ -9,8 +9,13 @@ defined('CONFIG_ARR_BY_KEY') or define('CONFIG_ARR_BY_KEY', 'key');
 defined('CONFIG_ARR_BY_CODE') or define('CONFIG_ARR_BY_CODE', 'code');
 defined('CONFIG_ARR_BY_NAME') or define('CONFIG_ARR_BY_NAME', 'name');
 
-defined('CONFIG_ARR') or define('CONFIG_ARR', [
+defined('CONFIG_ARR_KEYS') or define('CONFIG_ARR_KEYS', [
     CONFIG_ARR_BY_KEY,
+    CONFIG_ARR_BY_CODE,
+    CONFIG_ARR_BY_NAME
+]);
+
+defined('CONFIG_ARR_VALS') or define('CONFIG_ARR_VALS', [
     CONFIG_ARR_BY_CODE,
     CONFIG_ARR_BY_NAME
 ]);
