@@ -16,4 +16,13 @@ $( document ).ready(function() {
             children.toggle();
         });
     });
+
+    //display hidden list child
+    $('#member_manager').on('click', function(){
+        //find element sibling for toggle
+        $(this).siblings('a.member_manager.child').each(function(){
+            var children = $(this);
+            children.toggle();
+        });
+    });
 });

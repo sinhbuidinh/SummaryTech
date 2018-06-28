@@ -1,0 +1,11 @@
+member_group:
+    code:
+        not_specify: 0
+        business: 1
+        constructor: 2
+        both: 3
+    name:
+        not_specify: Default
+        business: Thương mại
+        constructor: Công trình
+        both: Cả hai

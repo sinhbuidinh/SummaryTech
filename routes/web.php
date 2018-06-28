@@ -41,3 +41,10 @@ Route::prefix('customer')->namespace('Customer')->name('customer')->group(functi
     Route::get('/create', 'CustomersController@create')->name('_create');
     Route::post('/create', 'CustomersController@create')->name('_create_post');
 });
+
+Route::prefix('member')->namespace('Member')->name('member')->group(function () {
+    Route::get('/list', 'MembersController@index')->name('_list');
+
+    Route::get('/create', 'MembersController@create')->name('_create');
+    Route::post('/create', 'MembersController@create')->name('_create_post');
+});
