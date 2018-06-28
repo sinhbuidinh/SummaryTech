@@ -34,3 +34,8 @@ Route::prefix('product')->namespace('Product')->name('product')->group(function 
     Route::get('/create_type', 'ProductsController@createType')->name('_create_type');
     Route::post('/create_type', 'ProductsController@createType')->name('_create_type_post');
 });
+
+Route::prefix('customer')->namespace('Customer')->name('customer')->group(function () {
+    Route::get('/create', 'CustomersController@create')->name('_create');
+    Route::post('/create', 'CustomersController@create')->name('_create_post');
+});

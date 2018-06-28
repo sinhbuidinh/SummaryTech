@@ -55,7 +55,7 @@
         <div class="row">
             <label class="control-label col-sm-2" for="{{ $form_name }}_color">Màu:</label>
             <div class="col-sm-5">
-              <select name="{{ $form_name }}[color]" id="{{ $form_name }}_color">
+                <select name="{{ $form_name }}[color]" id="{{ $form_name }}_color">
                     <option value="0">Default</option>
                     <option value="1">White</option>
                     <option value="2">Red</option>

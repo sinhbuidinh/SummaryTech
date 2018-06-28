@@ -8,6 +8,7 @@ class BaseController
 
     public function __construct()
     {
+        $this->data = [];
         if (!empty(session('message'))) {
             $this->data['message'] = session('message');
         }
