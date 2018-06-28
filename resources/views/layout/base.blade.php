@@ -13,6 +13,7 @@
         <script src="{{ asset('js/popper.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/general/event_message.js') }}"></script>
+        <script src="{{ asset('js/product/product_manager_menu.js') }}"></script>
     </head>
     <body>
         @include('layout.header')
