@@ -36,7 +36,7 @@
                       <th class="w10_percent">{{ $customer->address }}</th>
                       <th class="w10_percent">{{ $customer->telephone }}</th>
                       <th class="w10_percent">{{ $customer->contact_info }}</th>
-                      <th class="w10_percent">{{ $customer->business_member }}</th>
+                      <th class="w10_percent">{{ $customer->member->name }}:{{ $customer->member->telephone }}</th>
                     </tr>
                     @endforeach
                 </tbody>
