@@ -21,3 +21,11 @@ product_come_from:
     name:
         inside: "Nội nhập"
         outside: "Ngoại nhập"
+        
+have_vat:
+    code:
+        have: 0
+        not_have: 1
+    name:
+        have: VAT
+        not_have: NOT VAT

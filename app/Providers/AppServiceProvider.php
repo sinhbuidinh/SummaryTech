@@ -29,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('product_type_service', 'App\Services\ProductTypeService');
         $this->app->bind('customer_service', 'App\Services\CustomerService');
         $this->app->bind('member_service', 'App\Services\MemberService');
+        $this->app->bind('order_service', 'App\Services\OrderService');
     }
 }

@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function(){
+    return redirect(route('member_list', [], false));
 });
 
 Route::get('/ddd', 'DomainDrivenDesignController@index')->name('ddd');
@@ -48,3 +48,9 @@ Route::prefix('member')->namespace('Member')->name('member')->group(function () 
     Route::get('/create', 'MembersController@create')->name('_create');
     Route::post('/create', 'MembersController@create')->name('_create_post');
 });
+
+Route::prefix('order')->namespace('Order')->name('order')->group(function () {
+    Route::get('/create', 'OrdersController@create')->name('_create');
+    Route::post('/create', 'OrdersController@create')->name('_create_post');
+});
+

@@ -2,6 +2,10 @@
     box-sizing: inherit;
 }
 
+select.select_search {
+    width: 400px;
+}
+
 div.topnav {
     margin: 0;
     padding: 0;
