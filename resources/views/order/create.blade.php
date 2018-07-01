@@ -18,12 +18,11 @@
 <!-- real data -->
 <div class="row">
     <form class="form-horizontal"
-          action="{{ route('order_create_post') }}"
-          method="post"
-          style="width: 100%"
-          >
-        <input type="hidden" id="form_name" value="{{ $form_name }}" />
+            style="width: 100%"
+            action="{{ route('order_create_post') }}"
+            method="post">
         @csrf
+        <input type="hidden" id="form_name" value="{{ $form_name }}" />
         <div class="row">
             <label class="control-label col-sm-3" for="{{ $form_name }}_date_create">Ngày làm đơn:</label>
             <div class="col-sm-5">
@@ -82,62 +81,61 @@
         <table class="table table-bordered table-striped w100_percent">
             <thead>
                 <tr>
-                  <th class="">STT</th>
-                  <th class="">Tên hàng hóa</th>
-                  <th class="">SL(Tấm)</th>
-                  <th class="">Đơn Giá(VND)</th>
-                  <th class="">Có VAT/Không</th>
-                  <th class="">Thành tiền</th>
+                  <th>STT</th>
+                  <th>Tên hàng hóa</th>
+                  <th>SL(Tấm)</th>
+                  <th>Đơn Giá(VND)</th>
+                  <th>Có VAT/Không</th>
+                  <th>Thành tiền</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($products['list'] as $key => $product)
                 <tr>
-                  <td class="">{{ $key }}</td>
-                  <td class="">{!! $product->displayName !!}</td>
-                  <td class=""><input type="number" 
-                                      name="{{ $form_name }}[number][{{ $product->id }}]" 
-                                      id="{{ $form_name }}_number_{{ $product->id }}" 
-                                      value="{{ old($form_name.'[number]['. $product->id .']', '') }}" /></td>
-                  <td class=""><input type="text" 
-                                      name="{{ $form_name }}[unit][{{ $product->id }}]" 
-                                      id="{{ $form_name }}_unit_{{ $product->id }}" 
-                                      value="{{ old($form_name.'[unit]['. $product->id .']', '') }}" /></td>
-                  <td class="">
-                      <select 
-                          name="{{ $form_name }}[have_vat][{{ $product->id }}]"
-                          id="{{ $form_name }}_have_vat_{{ $product->id }}"
-                              >
+                  <td>{{ $key }}</td>
+                  <td>{!! $product->displayName !!}</td>
+                  <td><input type="text" 
+                            name="{{ $form_name }}[number][{{ $product->id }}]" 
+                            id="{{ $form_name }}_number_{{ $product->id }}" 
+                            value="{{ $$form_name['number'][$product->id]?? '' }}" /></td>
+                  <td><input type="text" 
+                            name="{{ $form_name }}[unit][{{ $product->id }}]" 
+                            id="{{ $form_name }}_unit_{{ $product->id }}" 
+                            value="{{ $$form_name['unit'][$product->id]?? '' }}" /></td>
+                  <td>
+                      <select name="{{ $form_name }}[have_vat][{{ $product->id }}]"
+                          id="{{ $form_name }}_have_vat_{{ $product->id }}">
                           @foreach ($have_vat_list as $k => $v)
                           <option value="{{ $k }}">{{ $v }}</option>
                           @endforeach
                       </select>
                   </td>
                   <td>
-                      <span id="display_total_{{ $product->id }}"></span>
-                      <input type="hidden" name="{{ $form_name }}[total][{{ $product->id }}]" value="" />
+                      <span id="display_total_{{ $product->id }}">{{ $$form_name['total'][$product->id]?? '' }}</span>
+                      <input type="hidden" 
+                             name="{{ $form_name }}[total][{{ $product->id }}]" 
+                             id="{{ $form_name }}_total_{{ $product->id }}"
+                             value="{{ $$form_name['total'][$product->id]?? '' }}" />
                   </td>
                 </tr>
                 @endforeach
                 <tr>
-                  <td class=""></td>
-                  <td class="">Tổng</td>
-                  <td class=""><input type="number" 
-                                      disabled="disabled"
-                                      name="{{ $form_name }}[total_all][number]" 
-                                      id="{{ $form_name }}_total_all_number" 
-                                      value="{{ old($form_name.'[total_all][number]', '') }}" /></td>
-                  <td class=""><input type="number" 
-                                      disabled="disabled"
-                                      name="{{ $form_name }}[total_all][unit]" 
-                                      value="{{ old($form_name.'[total_all][unit]', '') }}"/>
-                                      </td>
                   <td></td>
-                  <td class="">
-                      <input type="number" 
-                             disabled="disabled"
+                  <td>Tổng</td>
+                  <td>
+                      <span id="total_all_number_disp">{{ $$form_name['total_all']['number']?? '' }}</span>
+                      <input type="hidden" 
+                            name="{{ $form_name }}[total_all][number]" 
+                            id="{{ $form_name }}_total_all_number" 
+                            value="{{ $$form_name['total_all']['number']?? '' }}" /></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                      <span id="total_all_total_disp">{{ $$form_name['total_all']['total']?? '' }}</span>
+                      <input type="hidden" 
                              name="{{ $form_name }}[total_all][total]" 
-                             value="{{ old($form_name.'[total_all][total]', '') }}" />
+                             id="{{ $form_name }}_total_all_total"
+                             value="{{ $$form_name['total_all']['total']?? '' }}" />
                   </td>
                 </tr>
             </tbody>
@@ -149,6 +147,6 @@
                 <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
-  </form>
+    </form>
 </div>
 @endsection

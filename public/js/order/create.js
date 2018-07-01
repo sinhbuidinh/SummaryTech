@@ -6,23 +6,26 @@ $(function () {
 
     $("select").select2();
     $("input[name^='order_form["+unit_string_identify+"]']").on('keyup', function(){
-        //replace all string is not number by empty
-
         var prod_no = identifyProductNumById($(this).attr('id'));
         var obj_number = $('#'+form_name+'_'+number_string_identify+'_'+prod_no);
         var obj_unit = $(this);
 
         var new_sum = calculateTotal(obj_number, obj_unit);
-        //replace data
+        //replace data display
         $('#display_total_'+prod_no).html(new_sum);
 
         //change disp of number by locale
         changeLocaleObject(obj_unit, string_locale_global);
+
+        //new_sum not locale
+        setTotalPrice(form_name, prod_no, new_sum);
+
+        //re_calculate total
+        var new_sum_total = calculateSumTotal();
+        setSumTotal(new_sum_total);
     });
     
     $("input[name^='order_form["+number_string_identify+"]']").on('keyup', function(){
-        //replace all string is not number by empty
-
         var prod_no = identifyProductNumById($(this).attr('id'));
         var obj_number = $(this);
         var obj_unit = $('#'+form_name+'_'+unit_string_identify+'_'+prod_no);
@@ -30,20 +33,119 @@ $(function () {
         var new_sum = calculateTotal(obj_number, obj_unit);
         //replace data
         $('#display_total_'+prod_no).html(new_sum);
+
+        //change total num
+        var total_num = calculateSumNum();
+        var total_num_with_locale = localeString(total_num, string_locale_global);
+
+        //change data input
+        $('#order_form_total_all_number').val(total_num_with_locale);
+        //add html disp
+        $('#total_all_number_disp').html(total_num_with_locale);
+
+        //change disp of number by locale
+        changeLocaleObject(obj_number, string_locale_global);
+
+        //new_sum not locale
+        setTotalPrice(form_name, prod_no, new_sum);
+
+        //re_calculate total
+        var new_sum_total = calculateSumTotal();
+        setSumTotal(new_sum_total);
     });
 });
+
+function setTotalPrice(form_name, prod_no, new_sum)
+{
+//    var new_total_not_locale = removeNotDigitChar(new_sum);
+    $('#'+form_name+'_total_'+prod_no).val(new_sum);
+}
+
+function setSumTotal(total)
+{
+    if (parseInt(total) === 0) {
+        return 0;
+    }
+
+    total = removeNotDigitChar(total);
+    //add locale
+    total = localeString(total, string_locale_global);
+
+    $('#order_form_total_all_total').val(total);
+    $('#total_all_total_disp').html(total);
+}
+
+function calculateSumTotal()
+{
+    var sum_total = parseInt(0);
+
+    $('input[name^="order_form[total]"]').each(function(){
+        var number_this = $(this).val();
+        var num_without_digit = removeNotDigitChar(number_this);
+
+        //sum count up
+        if (!isNaN(num_without_digit)) {
+            sum_total += parseFloat(num_without_digit);
+        }
+    });
+
+    return parseInt(sum_total);
+}
+
+function calculateSumNum()
+{
+    var sum_num = parseInt(0);
+
+    $('input[name^="order_form[number]"]').each(function() {
+        var number = $(this).val();
+        //remove not digit
+        number = removeNotDigitChar(number);
+
+        var number_this = parseInt(number);
+        //sum count up
+        if (!isNaN(number_this)) {
+            sum_num += number_this;
+        }
+    });
+
+    return parseInt(sum_num);
+}
+
+function removeNotDigitChar(value_input)
+{
+    if (parseInt(value_input) === 0) {
+        return value_input;
+    }
+    value_input = value_input.toString();
+
+    var value = getValNotLocaleBy(string_locale_global, value_input);
+
+    var regex = /\D+/g;
+    var value_is_num = value.replace(regex, '');
+
+    return value_is_num;
+}
 
 function calculateTotal(obj_number, obj_unit)
 {
     var number = obj_number.val();
     var unit = obj_unit.val();
 
+    if (parseInt(number) === 0
+        || parseInt(unit) === 0
+    ) {
+        return 0;
+    }
+
     //replace all str_seperator global first
     number = getValNotLocaleBy(string_locale_global, number);
-    unit = getValNotLocaleBy(string_locale_global, unit);
+    unit   = getValNotLocaleBy(string_locale_global, unit);
 
-    var new_sum = calculateMulti(number, unit);
-    return new_sum;
+    //replace all string is not number by empty
+    number = removeNotDigitChar(number);
+    unit   = removeNotDigitChar(unit);
+
+    return calculateMulti(number, unit);
 }
 
 function identifyProductNumById(id_obj)
@@ -81,17 +183,29 @@ function changeLocaleObject(object, string_seperator)
         value = value_not_locale;
     }
 
+    //replace all string is not number by empty
+    value = removeNotDigitChar(value);
+
     //locale new value with string seperator
     var val_after_locale = localeString(value, string_seperator);
 
     //change val with new info after locale
     object.val(val_after_locale);
+    object.attr('value', val_after_locale);
 
     return value_not_locale;
 }
 
 function getValNotLocaleBy(string_seperator, value)
 {
+    if (typeof value === 'undefined' 
+        || typeof value.length === 'undefined' 
+        || value.length <= 1
+    ) {
+        return value;
+    }
+    value = value.toString();
+
     var re = new RegExp(string_seperator, 'g');
     var value_not_locale = value.replace(re, '');
 

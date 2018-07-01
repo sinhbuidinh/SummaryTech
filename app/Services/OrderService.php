@@ -19,18 +19,24 @@ class OrderService extends BaseService
             'contact_info',
             'address_delivery',
             'contact_info',
+            'total',
+            'total_all',
         ];
 
         $this->default_params = [
             'date_create' => dateToday(true, DATE_FORMAT_YMD_SUB),
-            'date_export' => dateToday(true, DATE_FORMAT_YMD_SUB)
+            'date_export' => dateToday(true, DATE_FORMAT_YMD_SUB),
+            'total_all' => [
+                'number' => 0,
+                'total' => 0
+            ]
         ];
 
         $this->form_name = 'order_form';
 
         $this->order_repository = new OrderRepository();
         $this->customer_service = getService('customer_service');
-        $this->product_service = getService('product_service');
+        $this->product_service  = getService('product_service');
     }
 
     public function processData($request)
@@ -60,6 +66,7 @@ class OrderService extends BaseService
 //                $last_data['result_insert'] = $result_insert['result'];
             }
         }
+//        dd($last_data, old($this->form_name));
 
         $last_data['list_customer'] = $this->loadListCustomer();
         $last_data['products'] = $this->loadListProduct();

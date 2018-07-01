@@ -21,4 +21,9 @@ class OrdersController extends BaseController
 
         return view('order.create', $assign_data);
     }
+    
+    public function index(Request $request)
+    {
+        return view('order.create', $request->all());
+    }
 }

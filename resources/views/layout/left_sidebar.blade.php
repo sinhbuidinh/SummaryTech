@@ -1,5 +1,8 @@
 <div class="w3-sidebar w3-collapse" id='sidenav' style="top: 0px;">
     <div class="w3-light-grey" id="leftmenuinner">
+        <h2 id="order_manager" class="left"><span class="left_h2">Order Manager</span></h2>
+        <a class="order_manager child list {{ classOfLeftMenu('order_create') }}"
+           href="{{ route('order_create') }}">Tạo mới đơn hàng</a>
         <h2 id="product_manager" class="left product"><span class="left_h2">Product Manager</span></h2>
         <a class="product_manager child list {{ classOfLeftMenu('product_list') }}"
            href="{{ route('product_list') }}">Danh sách sản phẩm</a>
