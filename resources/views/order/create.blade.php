@@ -52,7 +52,10 @@
                         name="{{ $form_name }}[customer_id]">
                     <option value="0">Default</option>
                     @foreach ($list_customer as $customer)
-                    <option value="{{ $customer->id }}">{{ $customer->company_name }}</option>
+                    <option value="{{ $customer->id }}"
+                            @if (old($form_name .'[customer_id]', $$form_name['customer_id']) == $customer->id)
+                            selected="selected"
+                            @endif>{{ $customer->company_name }}</option>
                     @endforeach
                 </select>
             </div>

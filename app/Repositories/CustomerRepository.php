@@ -14,6 +14,11 @@ class CustomerRepository extends BaseRepository
         $this->model = new Customer();
         parent::__construct($this->model);
     }
+    
+    public function findByIds($ids = [])
+    {
+        return $this->getList($ids);
+    }
 
     //
     public function insertOrUpdate($product_data)

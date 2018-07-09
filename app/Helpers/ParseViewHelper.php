@@ -4,7 +4,7 @@ function parseMessage($messages)
 {
     $result = '<div class="message">';
 
-    if (!empty($messages)) {
+    if (!empty($messages) && is_array($messages)) {
         foreach ($messages as $message_type => $value) {
             //fetch & generate data
             $result .= parseMessageByType($message_type, $value);
@@ -18,16 +18,24 @@ function parseMessage($messages)
 
 function parseMessageByType($type, $msg_val)
 {
-    if (empty($msg_val)
-        || !is_array($msg_val)
-    ) {
+    if (empty($msg_val)) {
         return '';
     }
 
     $class = parseClassByMsgType($type);
-
     $message_return = '';
-//    dd($msg_val);
+
+    if (!is_array($msg_val)
+        && is_string($msg_val)
+    ) {
+        $message_return .= '<label class="' . $class . ' fade in">';
+        $message_return .= '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+        $message_return .= $msg_val;
+        $message_return .= '</label>';
+        
+        return $message_return;
+    }
+
     foreach ($msg_val as $selector_element => $msg) {
         $message_return .= '<label id="alert_' . $selector_element . '" class="' . $class . ' fade in" for="' . $selector_element . '">';
         $message_return .= '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
