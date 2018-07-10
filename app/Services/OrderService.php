@@ -49,6 +49,12 @@ class OrderService extends BaseService
         $this->customer_service = getService('customer_service');
         $this->product_service  = getService('product_service');
     }
+    
+    public function getOrderList()
+    {
+        $order_list = $this->order_repository->listAll();
+        dd($order_list);
+    }
 
     public function processData($request)
     {
@@ -94,8 +100,13 @@ class OrderService extends BaseService
             DB::beginTransaction();
             //insert order data
             $result_order = $this->insertOrder($data_insert);
-            if ($result_order == false) {
+            if ($result_order['result'] == false) {
                 throw new Exception('insert order fail');
+            }
+
+            $data_insert['order_id'] = $result_order['insert_id'];
+            if ($data_insert['order_id'] == null) {
+                throw new Exception('Can not get order_id for create order_product');
             }
 
             //order product
@@ -146,7 +157,7 @@ class OrderService extends BaseService
          //insert orders by order_data above
         $result_order = $this->order_repository->insertOrUpdate($order_data);
 
-        return $result_order['result'];
+        return $result_order;
     }
 
     private function insertOrderProducts($data_insert)
@@ -185,6 +196,7 @@ class OrderService extends BaseService
             }
 
             $order_products[] = [
+                'order_id' => $data_insert['order_id'],
                 'product_id' => $product_id,
                 'number' => $numbers[$product_id] ?? 0,
                 'unit'   => $units[$product_id] ?? 0,

@@ -12,6 +12,8 @@ class BaseRepository
 
     protected $success_msg;
 
+    protected $last_id;
+
     public function __construct($model_obj)
     {
         $this->model = $model_obj;
@@ -47,14 +49,17 @@ class BaseRepository
                 $this->settingDataByFormKey($form_data, $old_data);
 
                 $old_data->save();
+                $this->last_id = $old_data->id?? null;
                 $this->success_msg[] = 'Update success';
             } else {
-                $new_data = $this->model;
+                $new_data = clone $this->model;
 
                 //insert data
                 $this->settingDataByFormKey($form_data, $new_data);
 
                 $new_data->save();
+
+                $this->last_id = $new_data->id?? null;
                 $this->success_msg[] = 'Insert success';
             }
 
@@ -66,7 +71,7 @@ class BaseRepository
         }
     }
 
-    private function settingDataByFormKey($form_data, &$obj)
+    protected function settingDataByFormKey($form_data, &$obj)
     {
         if (!empty($form_data)) {
             foreach ($form_data as $key => $value) {

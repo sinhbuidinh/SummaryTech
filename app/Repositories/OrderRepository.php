@@ -18,9 +18,39 @@ class OrderRepository extends BaseRepository
     //
     public function insertOrUpdate($product_data)
     {
+        $result = $this->baseInsertOrUpdate($product_data);
+
         return [
-            'result' => $this->baseInsertOrUpdate($product_data),
-            'message' => [
+            'insert_id' => $this->last_id,
+            'result'    => $result,
+            'message'   => [
+                MESSAGE_TYPE_ERROR   => $this->error_msg,
+                MESSAGE_TYPE_SUCCESS => $this->success_msg
+            ]
+        ];
+    }
+    
+    public function insert($order_data)
+    {
+        try {
+            $new_data = new Order();
+
+            //insert data
+            $this->settingDataByFormKey($order_data, $new_data);
+
+            $new_data->save();
+            $this->last_id = $new_data->id?? null;
+            $this->success_msg[] = 'Insert success';
+            $result = true;
+        } catch (Exception $e) {
+            $this->error_msg[] = $e->getMessage();
+            $result = false;
+        }
+
+        return [
+            'insert_id' => $this->last_id,
+            'result'    => $result,
+            'message'   => [
                 MESSAGE_TYPE_ERROR   => $this->error_msg,
                 MESSAGE_TYPE_SUCCESS => $this->success_msg
             ]

@@ -50,8 +50,8 @@ Route::prefix('member')->namespace('Member')->name('member')->group(function () 
 });
 
 Route::prefix('order')->namespace('Order')->name('order')->group(function () {
-    Route::post('/list', 'OrdersController@index')->name('_list');
-    
+    Route::get('/list', 'OrdersController@index')->name('_list');
+
     Route::get('/create', 'OrdersController@create')->name('_create');
     Route::post('/create', 'OrdersController@create')->name('_create_post');
 });

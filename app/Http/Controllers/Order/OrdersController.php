@@ -24,6 +24,8 @@ class OrdersController extends BaseController
     
     public function index(Request $request)
     {
-        return view('order.create', $request->all());
+        $order_list = $this->order_service->getOrderList();
+        
+        return view('order.show', $request->all());
     }
 }
