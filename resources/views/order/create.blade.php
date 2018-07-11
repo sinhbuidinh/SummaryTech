@@ -26,21 +26,21 @@
         <div class="row">
             <label class="control-label col-sm-3" for="{{ $form_name }}_date_create">Ngày làm đơn:</label>
             <div class="col-sm-5">
-                <input type="date"
+                <input type="datetime-local"
                         id="{{ $form_name }}_date_create"
                         name="{{ $form_name }}[date_create]"
                         placeholder="Input date create"
-                        value="{{ old( $form_name .'[date_create]', $$form_name['date_create']) }}" />
+                        value="{{ old( $form_name .'.date_create', $$form_name['date_create']) }}" />
             </div>
         </div>
         <div class="row">
             <label class="control-label col-sm-3" for="{{ $form_name }}_date_export">Ngày xuất hàng:</label>
             <div class="col-sm-5">
-                <input type="date"
+                <input type="datetime-local"
                         id="{{ $form_name }}_date_export"
                         name="{{ $form_name }}[date_export]"
                         placeholder="Input date create"
-                        value="{{ old( $form_name .'[date_export]', $$form_name['date_export']) }}" />
+                        value="{{ old( $form_name .'.date_export', $$form_name['date_export']) }}" />
             </div>
         </div>
         <!--list customer-->

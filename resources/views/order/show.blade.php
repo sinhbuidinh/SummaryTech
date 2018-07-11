@@ -12,6 +12,7 @@
 @section('custom_script')
     <script src="{{ asset('js/general/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/order/create.js') }}"></script>
+    <script src="{{ asset('js/order/show.js') }}"></script>
 @endsection
 
 @section('content')
@@ -26,18 +27,56 @@
               <th>Ngày xuất hàng</th>
               <th>Địa chỉ giao hàng</th>
               <th>Sản phẩm</th>
-              <th>Thành tiền</th>
+              <th>VAT/NOT</th>
             </tr>
         </thead>
         <tbody>
+            @foreach ($orders as $index => $order)
             <tr>
-              <td>STT</td>
-              <td>Khách hàng</td>
-              <td>Ngày xuất hàng</td>
-              <td>Địa chỉ giao hàng</td>
-              <td>Sản phẩm</td>
-              <td>Thành tiền</td>
+              <td>{{ $index + 1}}</td>
+              <td>{{ $order->customer->short_name }}</td>
+              <td>{{ $order->date_export }}</td>
+              <td>{{ $order->address_delivery }}</td>
+              <td>
+                  <label class="dropdown" for="order_product_detail">Show details<span class="caret"></span></label>
+                  <table id="order_product_detail" style="display: none;">
+                      <thead>
+                          <tr>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        @php
+                            $rowspan = 0;
+                        @endphp
+                        @if (!empty($order->orderProduct))
+                            @php
+                                $rowspan = count($order->orderProduct);
+                            @endphp
+                            @foreach ($order->orderProduct as $order_product)
+                            <tr>
+                                <td>{!! $order_product->product->displayName !!}</td>
+                                <td>{{ $order_product->number }}</td>
+                                <td>{{ $order_product->unit }}</td>
+                                <td>{{ $order_product->total }}</td>
+                            </tr>
+                            @endforeach
+                        @endif
+                            <tr rowspan="{{ $rowspan }}">
+                                <td>Tổng: </td>
+                                <td>{{ $order->total_all_number }}</td>
+                                <td></td>
+                                <td>{{ $order->total_all_price }}</td>
+                            </tr>
+                      </tbody>
+                  </table>
+              </td>
+              <td>{{ $vat_define[$order->is_vat] }}</td>
             </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

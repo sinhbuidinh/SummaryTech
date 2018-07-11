@@ -9,31 +9,31 @@ function dateStr($date, $req_date = true, $format = null)
         $format = $req_date ? DATE_FORMAT_YMD : DATE_FORMAT_YM;
     }
     if (is_string($date)) {
-        $date = now()->parse($date);
+        $date = now(DEFAULT_TIMEZONE)->parse($date);
     }
     return $date->format($format);
 }
 
 function dateToday($req_date = true, $format = null)
 {
-    $date = today();
+    $date = today(DEFAULT_TIMEZONE);
     return dateStr($date, $req_date, $format);
 }
 
 function dateLater($month, $day = null, $format = null)
 {
-    $date = now()->addMonths($month);
+    $date = now(DEFAULT_TIMEZONE)->addMonths($month);
     //plus date
     if (!is_null($day)) {
         $date = $date->addDays($day);
         return dateStr($date, true, $format);
     }
-    return dateStr($date, true, $format);
+    return dateStr($date, false, $format);
 }
 
 function dateAgo($month, $day = null, $format = null)
 {
-    $date = now()->subMonths($month);
+    $date = now(DEFAULT_TIMEZONE)->subMonths($month);
     //sub
     if (!is_null($day)) {
         $date = $date->subDays($day);

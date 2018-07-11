@@ -32,8 +32,8 @@ class OrderService extends BaseService
         ];
 
         $this->default_params = [
-            'date_create' => dateToday(true, DATE_FORMAT_YMD_SUB),
-            'date_export' => dateToday(true, DATE_FORMAT_YMD_SUB),
+            'date_create' => dateToday(true, DATE_FORMAT_YMD_HIS),
+            'date_export' => dateToday(true, DATE_FORMAT_YMD_HIS),
             'total_all' => [
                 'number' => 0,
                 'total' => 0
@@ -53,7 +53,7 @@ class OrderService extends BaseService
     public function getOrderList()
     {
         $order_list = $this->order_repository->listAll();
-        dd($order_list);
+        return $order_list;
     }
 
     public function processData($request)
@@ -208,7 +208,7 @@ class OrderService extends BaseService
         return $order_products;
     }
 
-    private function loadListVat($key = CONFIG_ARR_BY_CODE, $val = CONFIG_ARR_BY_NAME)
+    public function loadListVat($key = CONFIG_ARR_BY_CODE, $val = CONFIG_ARR_BY_NAME)
     {
         $have_vat = getKubunCustom('division.product', 'have_vat', $key, $val);
 

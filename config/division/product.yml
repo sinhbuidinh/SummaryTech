@@ -24,8 +24,8 @@ product_come_from:
         
 have_vat:
     code:
-        have: 0
-        not_have: 1
+        not_have: 0
+        have: 1
     name:
-        have: VAT
         not_have: NOT VAT
+        have: VAT

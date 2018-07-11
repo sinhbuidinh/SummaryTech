@@ -1,3 +1,28 @@
+.caret {
+    display: inline-block; 
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid\9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.caret.up {
+    border-top-width: 0;
+    border-bottom: 4px solid #000000;
+}
+
+label.dropdown {
+    cursor: pointer;
+}
+
+label.dropdown:hover {
+    color: #0069d9;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;

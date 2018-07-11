@@ -12,5 +12,6 @@ class BaseController
         if (!empty(session('message'))) {
             $this->data['message'] = session('message');
         }
+        date_default_timezone_set(DEFAULT_TIMEZONE);
     }
 }
