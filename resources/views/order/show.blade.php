@@ -36,7 +36,17 @@
             @foreach ($orders as $index => $order)
             <tr>
               <!--<td>{{ $index + 1}}</td>-->
-              <td>{{ $order->id }}</th>
+              <td>
+                  <form id="edit_{{ $order->id }}" action="{{ route('order_edit', ['order_id' => $order->id]) }}">
+                  {{ $order->id }}
+                  <input type="hidden" name="order_id" value="{{ $order->id }}" />
+                  <button type="submit" 
+                          class="btn btn-default btn-sm edit_order" >
+                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                    Edit
+                  </button>
+                  </form>
+              </td>
               <td>{{ $order->date_export }}</td>
               <td>{{ $order->date_create }}</td>
               <td>{{ $order->customer->short_name }}</td>

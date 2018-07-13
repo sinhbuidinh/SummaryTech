@@ -34,4 +34,9 @@ class OrdersController extends BaseController
 
         return view('order.show', $assign_data);
     }
+    
+    public function edit(Request $request)
+    {
+        dd($request->all());
+    }
 }
