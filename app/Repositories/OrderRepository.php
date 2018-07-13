@@ -57,8 +57,8 @@ class OrderRepository extends BaseRepository
         ];
     }
 
-    public function listAll()
+    public function listAll($ids = [], $order = [], $key_find = 'id')
     {
-        return $this->getList();
+        return $this->getList($ids, $order, $key_find);
     }
 }

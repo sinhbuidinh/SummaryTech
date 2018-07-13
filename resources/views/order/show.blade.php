@@ -22,9 +22,11 @@
     <table class="table table-bordered table-striped w100_percent">
         <thead>
             <tr>
-              <th>STT</th>
-              <th>Khách hàng</th>
+<!--              <th>STT</th>-->
+              <th>Order NO</th>
               <th>Ngày xuất hàng</th>
+              <th>Ngày tạo order</th>
+              <th>Khách hàng</th>
               <th>Địa chỉ giao hàng</th>
               <th>Sản phẩm</th>
               <th>VAT/NOT</th>
@@ -33,9 +35,11 @@
         <tbody>
             @foreach ($orders as $index => $order)
             <tr>
-              <td>{{ $index + 1}}</td>
-              <td>{{ $order->customer->short_name }}</td>
+              <!--<td>{{ $index + 1}}</td>-->
+              <td>{{ $order->id }}</th>
               <td>{{ $order->date_export }}</td>
+              <td>{{ $order->date_create }}</td>
+              <td>{{ $order->customer->short_name }}</td>
               <td>{{ $order->address_delivery }}</td>
               <td>
                   <label class="dropdown" for="order_product_detail">Show details<span class="caret"></span></label>

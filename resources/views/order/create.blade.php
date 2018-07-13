@@ -39,7 +39,7 @@
                 <input type="datetime-local"
                         id="{{ $form_name }}_date_export"
                         name="{{ $form_name }}[date_export]"
-                        placeholder="Input date create"
+                        placeholder="Input date export"
                         value="{{ old( $form_name .'.date_export', $$form_name['date_export']) }}" />
             </div>
         </div>

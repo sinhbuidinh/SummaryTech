@@ -1,4 +1,4 @@
-var string_locale_global = ',';
+var STR_LOCALE_GLOBAL = ',';
 $(function () {
     var form_name = $('#form_name').val();
     var unit_string_identify = 'unit';
@@ -15,7 +15,7 @@ $(function () {
         $('#display_total_'+prod_no).html(new_sum);
 
         //change disp of number by locale
-        changeLocaleObject(obj_unit, string_locale_global);
+        changeLocaleObject(obj_unit, STR_LOCALE_GLOBAL);
 
         //new_sum not locale
         setTotalPrice(form_name, prod_no, new_sum);
@@ -36,7 +36,7 @@ $(function () {
 
         //change total num
         var total_num = calculateSumNum();
-        var total_num_with_locale = localeString(total_num, string_locale_global);
+        var total_num_with_locale = localeString(total_num, STR_LOCALE_GLOBAL);
 
         //change data input
         $('#order_form_total_all_number').val(total_num_with_locale);
@@ -44,7 +44,7 @@ $(function () {
         $('#total_all_number_disp').html(total_num_with_locale);
 
         //change disp of number by locale
-        changeLocaleObject(obj_number, string_locale_global);
+        changeLocaleObject(obj_number, STR_LOCALE_GLOBAL);
 
         //new_sum not locale
         setTotalPrice(form_name, prod_no, new_sum);
@@ -63,13 +63,9 @@ function setTotalPrice(form_name, prod_no, new_sum)
 
 function setSumTotal(total)
 {
-    if (parseInt(total) === 0) {
-        return 0;
-    }
-
     total = removeNotDigitChar(total);
     //add locale
-    total = localeString(total, string_locale_global);
+    total = localeString(total, STR_LOCALE_GLOBAL);
 
     $('#order_form_total_all_total').val(total);
     $('#total_all_total_disp').html(total);
@@ -84,9 +80,12 @@ function calculateSumTotal()
         var num_without_digit = removeNotDigitChar(number_this);
 
         //sum count up
-        if (!isNaN(num_without_digit)) {
-            sum_total += parseFloat(num_without_digit);
+        var int_num = parseInt(num_without_digit);
+        if (isNaN(int_num)) {
+            return;
         }
+
+        sum_total = sum_total + int_num;
     });
 
     return parseInt(sum_total);
@@ -118,7 +117,7 @@ function removeNotDigitChar(value_input)
     }
     value_input = value_input.toString();
 
-    var value = getValNotLocaleBy(string_locale_global, value_input);
+    var value = getValNotLocaleBy(STR_LOCALE_GLOBAL, value_input);
 
     var regex = /\D+/g;
     var value_is_num = value.replace(regex, '');
@@ -138,8 +137,8 @@ function calculateTotal(obj_number, obj_unit)
     }
 
     //replace all str_seperator global first
-    number = getValNotLocaleBy(string_locale_global, number);
-    unit   = getValNotLocaleBy(string_locale_global, unit);
+    number = getValNotLocaleBy(STR_LOCALE_GLOBAL, number);
+    unit   = getValNotLocaleBy(STR_LOCALE_GLOBAL, unit);
 
     //replace all string is not number by empty
     number = removeNotDigitChar(number);
@@ -165,12 +164,12 @@ function calculateMulti(a, b)
 
     var multi_rs = parseFloat(a)*parseFloat(b);
 
-    return localeString(multi_rs, string_locale_global);
+    return localeString(multi_rs, STR_LOCALE_GLOBAL);
 }
 
 function changeLocaleObject(object, string_seperator)
 {
-    string_seperator || string_locale_global;
+    string_seperator || STR_LOCALE_GLOBAL;
 
     //identify val of object
     var value = object.val();

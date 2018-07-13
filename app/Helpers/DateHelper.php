@@ -14,10 +14,10 @@ function dateStr($date, $req_date = true, $format = null)
     return $date->format($format);
 }
 
-function dateToday($req_date = true, $format = null)
+function dateToday($format = null)
 {
-    $date = today(DEFAULT_TIMEZONE);
-    return dateStr($date, $req_date, $format);
+    $date = now(DEFAULT_TIMEZONE);
+    return dateStr($date, true, $format);
 }
 
 function dateLater($month, $day = null, $format = null)

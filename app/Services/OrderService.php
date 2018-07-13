@@ -32,8 +32,8 @@ class OrderService extends BaseService
         ];
 
         $this->default_params = [
-            'date_create' => dateToday(true, DATE_FORMAT_YMD_HIS),
-            'date_export' => dateToday(true, DATE_FORMAT_YMD_HIS),
+            'date_create' => dateToday(FORMAT_DATETIME_LOCAL),
+            'date_export' => dateToday(FORMAT_DATETIME_LOCAL),
             'total_all' => [
                 'number' => 0,
                 'total' => 0
@@ -52,7 +52,10 @@ class OrderService extends BaseService
     
     public function getOrderList()
     {
-        $order_list = $this->order_repository->listAll();
+        $order_list = $this->order_repository->listAll([], [
+            'date_export DESC',
+            'date_create DESC',
+        ]);
         return $order_list;
     }
 
@@ -101,17 +104,20 @@ class OrderService extends BaseService
             //insert order data
             $result_order = $this->insertOrder($data_insert);
             if ($result_order['result'] == false) {
+                dd($result_order);
                 throw new Exception('insert order fail');
             }
 
             $data_insert['order_id'] = $result_order['insert_id'];
             if ($data_insert['order_id'] == null) {
+                dd($data_insert);
                 throw new Exception('Can not get order_id for create order_product');
             }
 
             //order product
             $result_order_product = $this->insertOrderProducts($data_insert);
             if ($result_order_product == false) {
+                dd($result_order_product);
                 throw new Exception('insert order_product fail');
             }
 
