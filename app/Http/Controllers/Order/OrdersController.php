@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
+use Exception;
 
 class OrdersController extends BaseController
 {
@@ -18,6 +19,15 @@ class OrdersController extends BaseController
     public function create(Request $request)
     {
         $assign_data = $this->order_service->processData($request);
+        if ( isset($assign_data['result_insert'])
+            && $assign_data['result_insert'] == true
+        ) {
+            if (!empty($assign_data['order_id'])) {
+                return redirect(route('order_edit'))
+                        ->withInput(['order_id' => $assign_data['order_id']]);
+            }
+            return redirect(route('order_list'));
+        }
 
         return view('order.create', $assign_data);
     }
@@ -37,6 +47,15 @@ class OrdersController extends BaseController
     
     public function edit(Request $request)
     {
-        dd($request->all());
+        $request_data = $request->all();
+        $order_id = old('order_id', $request_data['order_id']?? null);
+
+        if (empty($order_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $assign_data = $this->order_service->processData($request);
+
+        return view('order.create', $assign_data);
     }
 }

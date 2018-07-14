@@ -5,6 +5,10 @@
            href="{{ route('order_create') }}">Tạo mới đơn hàng</a>
         <a class="order_manager child list {{ classOfLeftMenu('order_list') }}"
            href="{{ route('order_list') }}">Danh sách đơn hàng</a>
+        @if (classOfLeftMenu('order_edit'))
+        <a class="order_manager child list {{ classOfLeftMenu('order_edit') }}"
+           href="#">Chỉnh sửa đơn hàng</a>
+        @endif
         <h2 id="product_manager" class="left product"><span class="left_h2">Product Manager</span></h2>
         <a class="product_manager child list {{ classOfLeftMenu('product_list') }}"
            href="{{ route('product_list') }}">Danh sách sản phẩm</a>

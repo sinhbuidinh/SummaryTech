@@ -19,6 +19,7 @@ class OrderService extends BaseService
     public function __construct()
     {
         $this->attr_accessor = [
+            'order_code',
             'date_create',
             'date_export',
             'customer_id',
@@ -58,10 +59,50 @@ class OrderService extends BaseService
         ]);
         return $order_list;
     }
+    
+    public function getOrderById($id)
+    {
+        $order_list = $this->order_repository->listAll([$id], [
+            'date_export DESC',
+            'date_create DESC',
+        ]);
+        $order = $order_list->first();
+
+        $order->date_create = dateStr($order->date_create, true, FORMAT_DATETIME_LOCAL);
+        $order->date_export = dateStr($order->date_export, true, FORMAT_DATETIME_LOCAL);
+
+        return $order;
+    }
+    
+    private function identifyDefaultEdit($order_id)
+    {
+        //is_edit
+        $order_info = $this->getOrderById($order_id);
+        $this->default_params = $order_info;
+        $this->default_params['total_all'] = [
+            'number' => $order_info['total_all_number'],
+            'total'  => $order_info['total_all_price'],
+        ];
+        $this->default_params['order_code'] = $order_info['order_code'];
+
+        $order_product = $order_info->orderProduct;
+
+        //identify params
+        $this->default_params['number']   = $order_product->pluck('number', 'product_id')->toArray();
+        $this->default_params['unit']     = $order_product->pluck('unit', 'product_id')->toArray();
+        $this->default_params['have_vat'] = $order_product->pluck('have_vat', 'product_id')->toArray();
+        $this->default_params['total']    = $order_product->pluck('total', 'product_id')->toArray();
+    }
 
     public function processData($request)
     {
         $request_data = $request->all();
+
+        $order_id = $request_data['order_id']?? null;
+        if (!empty($order_id)) {
+            $is_edit = true;
+            $this->identifyDefaultEdit($order_id);
+        }
 
         $this->initVariable($this->form_name, $this->attr_accessor, $this->default_params);
         $data[$this->form_name] = $this->initFormData();
@@ -84,12 +125,15 @@ class OrderService extends BaseService
                 $result_insert = $this->insertOrderData($form_data);
                 $last_data['message']       = $result_insert['message'];
                 $last_data['result_insert'] = $result_insert['result'];
+                $last_data['order_id']      = $result_insert['order_id'];
             }
         }
 
         $last_data['list_customer'] = $this->loadListCustomer();
         $last_data['products'] = $this->loadListProduct();
         $last_data['have_vat_list'] = $this->loadListVat();
+
+        $last_data['is_edit'] = $is_edit?? false;
 
         return $last_data;
     }
@@ -123,6 +167,7 @@ class OrderService extends BaseService
 
             DB::commit();
             return [
+                'order_id' => $result_order['insert_id'],
                 'message' => [
                     MESSAGE_TYPE_SUCCESS => 'Insert order success'
                 ],
@@ -244,6 +289,23 @@ class OrderService extends BaseService
         if (empty($order_form_data['customer_id'])) {
             $result['result'] = false;
             $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_customer_id'] = 'Chọn khách hàng';
+        }
+
+        if (empty($order_form_data['address_delivery'])) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_address_delivery'] = 'Nhập address_delivery';
+        }
+
+        if (empty($order_form_data['contact_info'])) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_contact_info'] = 'Nhập contact_info';
+        }
+
+        $total_inscreen = $order_form_data['total'];
+        $total_single_product = array_filter($total_inscreen);
+        if (empty($total_single_product)) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_product_list'] = 'Nhập thông tin đơn hàng';
         }
 
         return $result;

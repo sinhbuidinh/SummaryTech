@@ -24,6 +24,16 @@
         @csrf
         <input type="hidden" id="form_name" value="{{ $form_name }}" />
         <div class="row">
+            <label class="control-label col-sm-3" for="{{ $form_name }}_order_code">Mã hóa đơn:</label>
+            <div class="col-sm-5">
+                <input type="text"
+                        id="{{ $form_name }}_order_code"
+                        name="{{ $form_name }}[order_code]"
+                        placeholder="Input order_code"
+                        value="{{ old( $form_name .'.order_code', $$form_name['order_code']?? '') }}" />
+            </div>
+        </div>
+        <div class="row">
             <label class="control-label col-sm-3" for="{{ $form_name }}_date_create">Ngày làm đơn:</label>
             <div class="col-sm-5">
                 <input type="datetime-local"
@@ -81,7 +91,7 @@
             </div>
         </div>
         <!-- list product -->
-        <table class="table table-bordered table-striped w100_percent">
+        <table id="product_list" class="table table-bordered table-striped w100_percent">
             <thead>
                 <tr>
                   <th>STT</th>
