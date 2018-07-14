@@ -132,8 +132,12 @@ h2 {
     background-color: #fff!important;
 }
 
-.w3-col.l10 {
+/* when have right padding turn on */ 
+/*.w3-col.l10 {
     width: 83.33333%;
+}*/
+.w3-col.l10 {
+    width: 96%;
 }
 
 div.row {

@@ -53,6 +53,7 @@ Route::prefix('order')->namespace('Order')->name('order')->group(function () {
     Route::get('/list', 'OrdersController@index')->name('_list');
 
     Route::get('/edit', 'OrdersController@edit')->name('_edit');
+    Route::get('/owe', 'OrdersController@owe')->name('_owe');
 
     Route::get('/create', 'OrdersController@create')->name('_create');
     Route::post('/create', 'OrdersController@create')->name('_create_post');

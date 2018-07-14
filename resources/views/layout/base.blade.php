@@ -31,7 +31,7 @@
                     @endif
                     @yield('content')
                 </div>
-                <div class="w3-col l2 m12" id='right'></div>
+                <!--<div class="w3-col l2 m12" id='right'></div>-->
             </div>
             <div class="footer w3-container w3-white" id='footer'></div>
         </div>

@@ -80,10 +80,9 @@
                 <!--list member-->
                 <select name="{{ $form_name }}[business_member]" id="{{ $form_name }}_business_member">
                     <option value="0">Default</option>
-                    <option value="1">A linh</option>
-                    <option value="2">A Phuong</option>
-                    <option value="3">A thanh</option>
-                    <option value="4">A Cuong</option>
+                    @foreach ($member_list['list'] as $member)
+                        <option value="{{ $member->id }}">{{ $member->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

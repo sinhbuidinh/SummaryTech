@@ -58,4 +58,9 @@ class OrdersController extends BaseController
 
         return view('order.create', $assign_data);
     }
+
+    public function owe(Request $request)
+    {
+        dd($request->all());
+    }
 }

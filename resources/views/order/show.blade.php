@@ -23,19 +23,21 @@
         <thead>
             <tr>
 <!--              <th>STT</th>-->
-              <th>Order NO</th>
-              <th>Ngày xuất hàng</th>
-              <th>Ngày tạo order</th>
-              <th>Khách hàng</th>
-              <th>Địa chỉ giao hàng</th>
-              <th>Sản phẩm</th>
-              <th>VAT/NOT</th>
+                <th>Order code</th>
+                <th>Order NO</th>
+                <th>Ngày xuất hàng</th>
+                <th>Ngày tạo order</th>
+                <th>Khách hàng</th>
+                <th>Địa chỉ giao hàng</th>
+                <th>Sản phẩm</th>
+                <th>VAT/NOT</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($orders as $index => $order)
             <tr>
               <!--<td>{{ $index + 1}}</td>-->
+              <td>{{ $order->order_code }}</td>
               <td>
                   <form id="edit_{{ $order->id }}" action="{{ route('order_edit', ['order_id' => $order->id]) }}">
                   {{ $order->id }}
