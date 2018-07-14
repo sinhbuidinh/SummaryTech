@@ -4,7 +4,6 @@ $(function () {
     var unit_string_identify = 'unit';
     var number_string_identify = 'number';
 
-    $("select").select2();
     $("input[name^='order_form["+unit_string_identify+"]']").on('keyup', function(){
         var prod_no = identifyProductNumById($(this).attr('id'));
         var obj_number = $('#'+form_name+'_'+number_string_identify+'_'+prod_no);

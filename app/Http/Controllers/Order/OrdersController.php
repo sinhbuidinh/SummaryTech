@@ -61,6 +61,8 @@ class OrdersController extends BaseController
 
     public function owe(Request $request)
     {
-        dd($request->all());
+        $last_data = $this->order_service->processOweSearch($request);
+
+        return view('order.owe', $last_data);
     }
 }

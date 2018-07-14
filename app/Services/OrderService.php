@@ -310,4 +310,63 @@ class OrderService extends BaseService
 
         return $result;
     }
+    
+    public function processOweSearch($request)
+    {
+        $request_data = $request->all();
+        //show list order by customer name or order_code
+        $list_order = $this->getOrderList();
+        $assign_data['list_order'] = $list_order;
+
+        $list_customer = $this->customer_service->listCustomer();
+        $assign_data['list_company'] = $list_customer['list'];
+
+        $last_data = array_merge($assign_data, $request_data);
+        
+        $data_search = $request_data['search_by'] ?? null;
+        if (!empty($data_search)) {
+            //search
+            $result_search = $this->searchOrder($data_search);
+            $last_data['result'] = $result_search;
+        }
+        
+        return $last_data;
+    }
+    
+    private function searchOrder($input)
+    {
+        $sql = 'SELECT *'
+                . ' FROM orders'
+                . ' INNER JOIN customers ON customers.id = orders.customer_id'
+                . ' INNER JOIN order_products ON order_products.order_id = orders.id';
+        
+        $cond[] = ' WHERE 1';
+        //search by order_code
+        if (!empty($input['order_code'])) {
+            $cond[] = "orders.order_code = '{$input['order_code']}'";
+        }
+
+        //search by order.id
+        if (!empty($input['id'])) {
+            $cond[] = "orders.id = {$input['id']}";
+        }
+
+        //search like name
+        if (!empty($input['name'])) {
+            $cond[] = "customers.company_name LIKE %{$input['name']}%"
+                    . " OR customers.short_name LIKE %{$input['name']}%";
+        }
+
+        //find query search condition
+        $where = implode(' AND ', $cond);
+
+        //parse to sql
+        $sql .= $where;
+
+        //search
+        $result_search = $this->order_repository->searchByRawSql($sql);
+        dd($sql, $result_search);
+
+        return $result_search;
+    }
 }

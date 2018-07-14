@@ -12,6 +12,7 @@
 @section('custom_script')
     <script src="{{ asset('js/general/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/order/create.js') }}"></script>
+    <script src="{{ asset('js/order/select_search.js') }}"></script>
 @endsection
 
 @section('content')

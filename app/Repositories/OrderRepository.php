@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Repositories\BaseRepository;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class OrderRepository extends BaseRepository
 {
@@ -60,5 +61,10 @@ class OrderRepository extends BaseRepository
     public function listAll($ids = [], $order = [], $key_find = 'id')
     {
         return $this->getList($ids, $order, $key_find);
+    }
+    
+    public function searchByRawSql($raw_sql)
+    {
+        return DB::select(DB::raw($raw_sql));
     }
 }
