@@ -32,8 +32,8 @@ class CustomerRepository extends BaseRepository
         ];
     }
 
-    public function listAll()
+    public function listAll($id = [], $order = [])
     {
-        return $this->getList();
+        return $this->getList($id);
     }
 }

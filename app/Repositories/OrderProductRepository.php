@@ -25,4 +25,9 @@ class OrderProductRepository extends BaseRepository
             ]
         ];
     }
+    
+    public function deleteByOrderId($order_id)
+    {
+        return $this->model->where('order_id', '=', $order_id)->delete();
+    }
 }

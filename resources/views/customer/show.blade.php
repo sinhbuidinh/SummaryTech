@@ -32,7 +32,7 @@
                     <tr>
                         <td>
                             {{ $customer->id }}
-                            <a class="btn btn-default btn-sm edit_customer" 
+                            <a class="btn btn-info btn-sm edit_customer" 
                                href="{{ route('customer_edit', ['customer_id' => $customer->id]) }}" >
                               Edit
                             </a>

@@ -24,6 +24,11 @@
             method="post">
         @csrf
         <input type="hidden" id="form_name" value="{{ $form_name }}" />
+        <input type="hidden" 
+               id="{{ $form_name }}_id" 
+               name="{{ $form_name }}[id]" 
+               value="{{ old( $form_name .'[id]', $$form_name['id'] ?? '') }}"
+               />
         <div class="row">
             <label class="control-label col-sm-3" for="{{ $form_name }}_order_code">Mã hóa đơn:</label>
             <div class="col-sm-5">

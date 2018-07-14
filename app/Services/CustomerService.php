@@ -7,10 +7,12 @@ use App\Repositories\CustomerRepository;
 class CustomerService extends BaseService
 {
     private $customer_repository;
+    private $member_service;
 
     public function __construct()
     {
         $this->attr_accessor = [
+            'id',
             'company_name',
             'short_name',
             'address',
@@ -33,6 +35,7 @@ class CustomerService extends BaseService
         $this->form_name = 'customer_form';
 
         $this->customer_repository = new CustomerRepository();
+        $this->member_service = getService('member_service');
     }
 
     public function listCustomer()
@@ -45,7 +48,7 @@ class CustomerService extends BaseService
     public function processData($request)
     {
         $request_data = $request->all();
-        
+
         $customer_id = $request_data['customer_id']?? null;
         if (!empty($customer_id)) {
             $is_edit = true;
@@ -56,7 +59,9 @@ class CustomerService extends BaseService
         $data[$this->form_name] = $this->initFormData();
 
         $last_data = array_merge($data, $request_data);
-        $last_data['form_name'] = $this->form_name;
+
+        $last_data['member_list'] = $this->member_service->listMember();
+        $last_data['form_name']   = $this->form_name;
 
         if (!empty($last_data[$this->form_name])
             && $request->isMethod('post')
@@ -81,15 +86,14 @@ class CustomerService extends BaseService
 
         return $last_data;
     }
-    
+
     private function identifyDefaultEdit($customer_id)
     {
         //is_edit
-        $customer_info = $this->getCustomerById($customer_id);
-        dd($customer_info);
+        $customer_info = $this->getCustomerById($customer_id)->toArray();
         $this->default_params = $customer_info;
     }
-    
+
     public function getCustomerById($id)
     {
         $customer_list = $this->customer_repository->listAll([$id]);
@@ -133,10 +137,10 @@ class CustomerService extends BaseService
             $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_contact_info'] = 'Nhập thông tin liên hệ';
         }
 
-        if (empty($customer_form_data['business_member'])) {
-            $result['result'] = false;
-            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_business_member'] = 'Chọn nhân viên phụ trách';
-        }
+//        if (empty($customer_form_data['business_member'])) {
+//            $result['result'] = false;
+//            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_business_member'] = 'Chọn nhân viên phụ trách';
+//        }
 
         return $result;
     }

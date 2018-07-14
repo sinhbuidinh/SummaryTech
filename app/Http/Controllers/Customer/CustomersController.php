@@ -8,13 +8,11 @@ use Illuminate\Http\Request;
 class CustomersController extends BaseController
 {
     private $customer_service;
-    private $member_service;
 
     public function __construct()
     {
         parent::__construct();
         $this->customer_service = getService('customer_service');
-        $this->member_service = getService('member_service');
     }
 
     public function index()
@@ -27,7 +25,6 @@ class CustomersController extends BaseController
     public function create(Request $request)
     {
         $assign_data = $this->customer_service->processData($request);
-        $assign_data['member_list'] = $this->member_service->listMember();
 
         if ( isset($assign_data['result_insert'])
             && $assign_data['result_insert'] == true
@@ -48,7 +45,12 @@ class CustomersController extends BaseController
         }
 
         $assign_data = $this->customer_service->processData($request);
+        if ( isset($assign_data['result_insert'])
+            && $assign_data['result_insert'] == true
+        ) {
+            return redirect(route('customer_list'));
+        }
 
-        return view('order.create', $assign_data);
+        return view('customer.create', $assign_data);
     }
 }

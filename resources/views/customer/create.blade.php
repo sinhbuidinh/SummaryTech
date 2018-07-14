@@ -19,6 +19,11 @@
           style="width: 100%"
           >
         @csrf
+        <input type="hidden" 
+               id="{{ $form_name }}_id" 
+               name="{{ $form_name }}[id]" 
+               value="{{ old( $form_name .'[id]', $$form_name['id'] ?? '') }}"
+               />
         <div class="row">
             <label class="control-label col-sm-3" for="{{ $form_name }}_company_name">Tên công ty:</label>
             <div class="col-sm-5">
@@ -92,7 +97,20 @@
                 <select name="{{ $form_name }}[business_member]" id="{{ $form_name }}_business_member">
                     <option value="0">Default</option>
                     @foreach ($member_list['list'] as $member)
-                        <option value="{{ $member->id }}">{{ $member->name }}</option>
+                        <option value="{{ $member->id }}"
+                                @if ((
+                                        isset($$form_name['business_member'])
+                                        && $member->id == $$form_name['business_member']
+                                    )
+                                    || 
+                                    (
+                                        old($form_name .'business_member')
+                                        && old($form_name .'business_member') == $member->id
+                                    )
+                                )
+                                selected="selected"
+                                @endif
+                                >{{ $member->name }}</option>
                     @endforeach
                 </select>
             </div>

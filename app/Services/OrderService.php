@@ -19,6 +19,7 @@ class OrderService extends BaseService
     public function __construct()
     {
         $this->attr_accessor = [
+            'id',
             'order_code',
             'date_create',
             'date_export',
@@ -138,7 +139,7 @@ class OrderService extends BaseService
                 $result_insert = $this->insertOrderData($form_data);
                 $last_data['message']       = $result_insert['message'];
                 $last_data['result_insert'] = $result_insert['result'];
-                $last_data['order_id']      = $result_insert['order_id'];
+                $last_data['order_id']      = $result_insert['order_id']?? null;
             }
         }
 
@@ -208,6 +209,7 @@ class OrderService extends BaseService
         $member_id = $customer_info->business_member;
 
         $order_data = [
+            "order_code"       => $data_insert['order_code'],
             "date_create"      => $data_insert['date_create'],
             "date_export"      => $data_insert['date_export'],
             "customer_id"      => $data_insert['customer_id'],
@@ -217,6 +219,9 @@ class OrderService extends BaseService
             "total_all_price"  => $data_insert['total_all']['total'],
             "member_id"        => $member_id
         ];
+        if (!empty($data_insert['id'])) {
+            $order_data['id'] = $data_insert['id'];
+        }
 
          //insert orders by order_data above
         $result_order = $this->order_repository->insertOrUpdate($order_data);
@@ -226,6 +231,10 @@ class OrderService extends BaseService
 
     private function insertOrderProducts($data_insert)
     {
+        //delete all old order_product
+        $order_id = $data_insert['order_id'];
+        $result_delete = $this->order_product_repository->deleteByOrderId($order_id);
+
         $order_products = $this->getOrderProductInForm($data_insert);
 
         //insert by list order_products above

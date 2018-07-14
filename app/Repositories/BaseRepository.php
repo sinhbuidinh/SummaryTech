@@ -60,8 +60,9 @@ class BaseRepository
     protected function baseInsertOrUpdate($form_data, $primary_id = null)
     {
         try {
-            if (!empty($primary_id)) {
-                $old_data = $this->model->find($primary_id);
+            if (!empty($primary_id) || !empty($form_data['id'])) {
+                $id = $primary_id ?? ($form_data['id']?? null);
+                $old_data = $this->model->find($id);
 
                 //update
                 $this->settingDataByFormKey($form_data, $old_data);

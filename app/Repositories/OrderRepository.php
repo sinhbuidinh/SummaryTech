@@ -29,7 +29,7 @@ class OrderRepository extends BaseRepository
             ]
         ];
     }
-    
+
     public function insert($order_data)
     {
         try {

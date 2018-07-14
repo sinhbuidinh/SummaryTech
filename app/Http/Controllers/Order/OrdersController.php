@@ -22,10 +22,6 @@ class OrdersController extends BaseController
         if ( isset($assign_data['result_insert'])
             && $assign_data['result_insert'] == true
         ) {
-            if (!empty($assign_data['order_id'])) {
-                return redirect(route('order_edit'))
-                        ->withInput(['order_id' => $assign_data['order_id']]);
-            }
             return redirect(route('order_list'));
         }
 
