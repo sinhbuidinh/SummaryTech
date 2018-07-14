@@ -60,6 +60,19 @@ class OrderService extends BaseService
         return $order_list;
     }
     
+    public function getInfoDispList($request)
+    {
+        $order_list['orders'] = $this->getOrderList();
+        $request_data = $request->all();
+
+        $assign_data = array_merge($order_list, $request_data);
+
+        $have_vat = $this->loadListVat();
+        $assign_data['vat_define'] = $have_vat;
+
+        return $assign_data;
+    }
+    
     public function getOrderById($id)
     {
         $order_list = $this->order_repository->listAll([$id], [
@@ -130,7 +143,7 @@ class OrderService extends BaseService
         }
 
         $last_data['list_customer'] = $this->loadListCustomer();
-        $last_data['products'] = $this->loadListProduct();
+        $last_data['products']      = $this->loadListProduct();
         $last_data['have_vat_list'] = $this->loadListVat();
 
         $last_data['is_edit'] = $is_edit?? false;
@@ -313,33 +326,69 @@ class OrderService extends BaseService
     
     public function processOweSearch($request)
     {
-        $request_data = $request->all();
+        $last_data = $this->getInfoDispList($request);
+
         //show list order by customer name or order_code
         $list_order = $this->getOrderList();
-        $assign_data['list_order'] = $list_order;
+        $last_data['list_order'] = $list_order;
 
         $list_customer = $this->customer_service->listCustomer();
-        $assign_data['list_company'] = $list_customer['list'];
+        $last_data['list_company'] = $list_customer['list'];
 
-        $last_data = array_merge($assign_data, $request_data);
+        $data_search = $last_data['search_by'] ?? null;
+        //search
+        $result_search = $this->searchOrder($data_search);
+        $last_data['result_search'] = $result_search;
         
-        $data_search = $request_data['search_by'] ?? null;
         if (!empty($data_search)) {
-            //search
-            $result_search = $this->searchOrder($data_search);
-            $last_data['result'] = $result_search;
+            $last_data['cond_text'] = $this->generateCondText($data_search);
         }
-        
+
+        $last_data['is_search'] = true;
+
         return $last_data;
     }
     
+    private function generateCondText($input)
+    {
+        $result = [];
+
+        //add name
+        if (!empty($input['name'])) {
+            $result[] = "Công ty: ".$input['name'];
+        }
+
+        //add cond order_code
+        if (!empty($input['order_code'])) {
+            $result[] = "Order code: ". $input['order_code'];
+        }
+
+        //add cond date
+        if (!empty($input['date'])) {
+            $result[] = "Date search: ". $input['date'];
+        }
+        
+        if (empty($input)) {
+            return '';
+        }
+
+        return ', với điều kiện ' . implode(', ', $result);
+    }
+
     private function searchOrder($input)
+    {
+        $result_search = $this->order_repository->searchByInput($input);
+
+        return $result_search;
+    }
+    
+    private function searchBySql($input)
     {
         $sql = 'SELECT *'
                 . ' FROM orders'
                 . ' INNER JOIN customers ON customers.id = orders.customer_id'
                 . ' INNER JOIN order_products ON order_products.order_id = orders.id';
-        
+
         $cond[] = ' WHERE 1';
         //search by order_code
         if (!empty($input['order_code'])) {
@@ -363,10 +412,7 @@ class OrderService extends BaseService
         //parse to sql
         $sql .= $where;
 
-        //search
-        $result_search = $this->order_repository->searchByRawSql($sql);
-        dd($sql, $result_search);
-
-        return $result_search;
+        return $sql;
     }
+    
 }

@@ -18,7 +18,7 @@
             <table class="table table-bordered table-striped w100_percent">
                 <thead>
                     <tr>
-                      <!--<th class="w10_percent">ID</th>-->
+                      <th class="w10_percent">ID</th>
                       <th class="w30_percent">Tên công ty</th>
                       <th class="w20_percent">Mã CTy</th>
                       <th class="w20_percent">Địa chỉ</th>
@@ -30,13 +30,19 @@
                 <tbody>
                     @foreach($list as $customer)
                     <tr>
-                      <!--<td>{{ $customer->id }}</td>-->
-                      <th class="w40_percent">{{ $customer->company_name }}</th>
-                      <th class="w20_percent">{{ $customer->short_name }}</th>
-                      <th class="w10_percent">{{ $customer->address }}</th>
-                      <th class="w10_percent">{{ $customer->telephone }}</th>
-                      <th class="w10_percent">{{ $customer->contact_info }}</th>
-                      <th class="w10_percent">{{ $customer->member->name }}:{{ $customer->member->telephone }}</th>
+                        <td>
+                            {{ $customer->id }}
+                            <a class="btn btn-default btn-sm edit_customer" 
+                               href="{{ route('customer_edit', ['customer_id' => $customer->id]) }}" >
+                              Edit
+                            </a>
+                        </td>
+                        <th class="w40_percent">{{ $customer->company_name }}</th>
+                        <th class="w20_percent">{{ $customer->short_name }}</th>
+                        <th class="w10_percent">{{ $customer->address }}</th>
+                        <th class="w10_percent">{{ $customer->telephone ?? '' }}</th>
+                        <th class="w10_percent">{{ $customer->contact_info }}</th>
+                        <th class="w10_percent">{{ $customer->member->name ?? '' }}:{{ $customer->member->telephone ?? '' }}</th>
                     </tr>
                     @endforeach
                 </tbody>

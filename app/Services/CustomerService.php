@@ -17,6 +17,7 @@ class CustomerService extends BaseService
             'telephone',
             'business_member',
             'contact_info',
+            'debt',
         ];
 
         $this->default_params = [
@@ -26,6 +27,7 @@ class CustomerService extends BaseService
             'telephone' => '',
             'business_member' => 0,
             'contact_info' => '',
+            'debt' => 30,
         ];
 
         $this->form_name = 'customer_form';
@@ -43,6 +45,12 @@ class CustomerService extends BaseService
     public function processData($request)
     {
         $request_data = $request->all();
+        
+        $customer_id = $request_data['customer_id']?? null;
+        if (!empty($customer_id)) {
+            $is_edit = true;
+            $this->identifyDefaultEdit($customer_id);
+        }
 
         $this->initVariable($this->form_name, $this->attr_accessor, $this->default_params);
         $data[$this->form_name] = $this->initFormData();
@@ -69,7 +77,25 @@ class CustomerService extends BaseService
             }
         }
 
+        $last_data['is_edit'] = $is_edit?? false;
+
         return $last_data;
+    }
+    
+    private function identifyDefaultEdit($customer_id)
+    {
+        //is_edit
+        $customer_info = $this->getCustomerById($customer_id);
+        dd($customer_info);
+        $this->default_params = $customer_info;
+    }
+    
+    public function getCustomerById($id)
+    {
+        $customer_list = $this->customer_repository->listAll([$id]);
+        $customer = $customer_list->first();
+
+        return $customer;
     }
 
     private function insertCustomer($customer_form_data)
@@ -90,6 +116,26 @@ class CustomerService extends BaseService
         if (empty($customer_form_data['company_name'])) {
             $result['result'] = false;
             $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_company_name'] = 'Nhập tên công ty';
+        }
+
+        if (empty($customer_form_data['address'])) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_address'] = 'Nhập địa chỉ công ty';
+        }
+
+        if (empty($customer_form_data['telephone'])) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_telephone'] = 'Nhập điện thoại công ty';
+        }
+
+        if (empty($customer_form_data['contact_info'])) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_contact_info'] = 'Nhập thông tin liên hệ';
+        }
+
+        if (empty($customer_form_data['business_member'])) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_business_member'] = 'Chọn nhân viên phụ trách';
         }
 
         return $result;

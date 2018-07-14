@@ -37,4 +37,18 @@ class CustomersController extends BaseController
 
         return view('customer.create', $assign_data);
     }
+    
+    public function edit(Request $request)
+    {
+        $request_data = $request->all();
+        $customer_id = old('customer_id', $request_data['customer_id']?? null);
+
+        if (empty($customer_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $assign_data = $this->customer_service->processData($request);
+
+        return view('order.create', $assign_data);
+    }
 }

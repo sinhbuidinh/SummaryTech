@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function() {
     //handle when choosing customer or order_code
     $('select#company, select#order_code').on('change', function(){
         var val_search = $(this).val();
@@ -26,6 +26,21 @@ $(function () {
                 value: val_search
             }).appendTo(form);
         }
+
+        form.submit();
+    });
+
+    $('input#date').on('change', function() {
+        var form = $('form#search');
+        $('form#search input[type="hidden"][name="search_by[date]"]').remove();
+
+        var date = $(this).val();
+        $('<input>').attr({
+            type: 'hidden',
+            id: 'search_by_date',
+            name: 'search_by[date]',
+            value: date
+        }).appendTo(form);
 
         form.submit();
     });

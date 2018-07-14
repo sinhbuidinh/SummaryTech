@@ -42,6 +42,17 @@
             </div>
         </div>
         <div class="row">
+            <label class="control-label col-sm-3" for="{{ $form_name }}_debt">Hạn công nợ:</label>
+            <div class="col-sm-5">
+                <input type="number"
+                     class="form-control"
+                     id="{{ $form_name }}_debt"
+                     name="{{ $form_name }}[debt]"
+                     placeholder="Nhập công nợ của khách (ngày)"
+                     value="{{ old( $form_name .'[debt]', $$form_name['debt']) }}"/>
+            </div>
+        </div>
+        <div class="row">
             <label class="control-label col-sm-3" for="{{ $form_name }}_address">Địa chỉ:</label>
             <div class="col-sm-5">
                 <input type="text"

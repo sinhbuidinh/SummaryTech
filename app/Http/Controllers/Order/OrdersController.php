@@ -34,13 +34,7 @@ class OrdersController extends BaseController
     
     public function index(Request $request)
     {
-        $order_list['orders'] = $this->order_service->getOrderList();
-        $request_data = $request->all();
-
-        $assign_data = array_merge($order_list, $request_data);
-
-        $have_vat = $this->order_service->loadListVat();
-        $assign_data['vat_define'] = $have_vat;
+        $assign_data = $this->order_service->getInfoDispList($request);
 
         return view('order.show', $assign_data);
     }

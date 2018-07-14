@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class BaseRepository
 {
@@ -16,7 +17,24 @@ class BaseRepository
 
     public function __construct($model_obj)
     {
+        DB::enableQueryLog();
         $this->model = $model_obj;
+    }
+    
+    public function getLogQuery()
+    {
+        $log_query = DB::getQueryLog();
+        return $log_query;
+    }
+    
+    public function getLastQuery()
+    {
+        $log_query = $this->getLogQuery();
+        if (empty($log_query)) {
+            return null;
+        }
+        
+        return end($log_query);
     }
 
     protected function getList($ids = [], $order = [], $key_find = 'id')

@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Repositories\BaseRepository;
 use App\Models\Order;
-use Illuminate\Support\Facades\DB;
 
 class OrderRepository extends BaseRepository
 {
@@ -61,6 +60,42 @@ class OrderRepository extends BaseRepository
     public function listAll($ids = [], $order = [], $key_find = 'id')
     {
         return $this->getList($ids, $order, $key_find);
+    }
+
+    /**
+     * Get data search if empty($input) => search all
+     * 
+     * @param type $input
+     */
+    public function searchByInput($input)
+    {
+        //check cond
+        $result = $this->model;
+
+        //search all
+        if (empty($input)) {
+            return $result->get();
+        }
+
+        //add name
+        if (!empty($input['name'])) {
+            $result = $result->withName($input['name']);
+        }
+
+        //add cond order_code
+        if (!empty($input['order_code'])) {
+            $result = $result->withOrderCode($input['order_code']);
+        }
+
+        //add cond date
+        if (!empty($input['date'])) {
+            $result = $result->withDate($input['date']);
+        }
+
+        //get data search
+        $result_search = $result->get();
+
+        return $result_search;
     }
     
     public function searchByRawSql($raw_sql)
