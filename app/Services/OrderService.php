@@ -21,6 +21,8 @@ class OrderService extends BaseService
         $this->attr_accessor = [
             'id',
             'order_code',
+            'date_export_bill',
+            'output_bill',
             'date_create',
             'date_export',
             'customer_id',
@@ -51,16 +53,15 @@ class OrderService extends BaseService
         $this->customer_service = getService('customer_service');
         $this->product_service  = getService('product_service');
     }
-    
+
     public function getOrderList()
     {
         $order_list = $this->order_repository->listAll([], [
             'date_export DESC',
-            'date_create DESC',
         ]);
         return $order_list;
     }
-    
+
     public function getInfoDispList($request)
     {
         $order_list['orders'] = $this->getOrderList();
@@ -210,6 +211,8 @@ class OrderService extends BaseService
 
         $order_data = [
             "order_code"       => $data_insert['order_code'],
+            "date_export_bill" => $data_insert['date_export_bill'],
+            "output_bill"      => $data_insert['output_bill'][0]?? 0,
             "date_create"      => $data_insert['date_create'],
             "date_export"      => $data_insert['date_export'],
             "customer_id"      => $data_insert['customer_id'],
@@ -233,7 +236,7 @@ class OrderService extends BaseService
     {
         //delete all old order_product
         $order_id = $data_insert['order_id'];
-        $result_delete = $this->order_product_repository->deleteByOrderId($order_id);
+        $this->order_product_repository->deleteByOrderId($order_id);
 
         $order_products = $this->getOrderProductInForm($data_insert);
 

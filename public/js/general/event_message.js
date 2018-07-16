@@ -1,3 +1,19 @@
+$(document).ready(function() {
+    $('.message label.alert').on('click', function (){
+        var for_attr = $(this).attr('for');
+
+        var el = document.getElementById('label_'+for_attr);
+        if (el) {
+            el.scrollIntoView(true);
+        } else {
+            el = document.getElementById(for_attr);
+            if (el) {
+                el.scrollIntoView(true);
+            }
+        }
+    });
+});
+
 function eventClickAlertMsg()
 {
     //find close btn

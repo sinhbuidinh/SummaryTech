@@ -15,6 +15,41 @@ class Order extends BaseModel
     {
         return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
     }
+    
+    public function getDebtLimitAttribute() 
+    {
+        //is ouput bill
+        $is_output_bill = $this->output_bill;
+
+        //=1 => calculate by date_export_bill, else cal by date_export
+        $date_calculate = $this->date_export;
+        if ($is_output_bill == 1) {
+            $date_calculate = $this->date_export_bill;
+        }
+
+        //date debt
+        $date_debt_no = $this->customer->debt;
+
+        //call from date_export_bill
+        if (empty($date_calculate)
+            || $date_calculate == DATE_FORMAT_YMD_EMPTY
+        ) {
+            return $date_debt_no;
+        }
+
+        //parse
+        $date_export_bill = dateParse($date_calculate);
+
+        //limit date
+        $limit_date = $date_export_bill->addDays($date_debt_no);
+
+        //today
+        $now_date = dateToday();
+
+        //compare limit & now => 
+        $date_out_debt = dateCalulateDays($now_date, $limit_date);
+        return $limit_date->format(DATE_FORMAT_YMD_SUB).'<br/>('.$date_out_debt.')';
+    }
 
     public function scopeWithName($query, $name)
     {
@@ -22,12 +57,12 @@ class Order extends BaseModel
             $query->where('company_name', 'like', '%'.$name.'%');
         });
     }
-    
+
     public function scopeWithOrderCode($query, $order_code)
     {
         return $query->where('order_code', '=', $order_code);
     }
-    
+
     public function scopeWithDate($query, $date)
     {
         $from = dateStr($date, TRUE, DATE_FORMAT_YMD_SUB.' 00:00:00');

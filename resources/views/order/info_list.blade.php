@@ -7,6 +7,8 @@
             <th>Order NO</th>
             <th>Ngày xuất hàng</th>
             <th>Ngày tạo order</th>
+            <th>Ngày xuất hóa đơn(nếu có)</th>
+            <th style="width: 90px;">Công nợ tới<br/>(còn ? ngày)</th>
             <th>Khách hàng</th>
             @if (!isset($is_search) 
             || (isset($is_search) && $is_search == false)
@@ -22,11 +24,11 @@
     <tbody>
         @if (blank($orders))
             @php
-                $colspan = 8;
+                $colspan = 9;
                 if (!isset($is_search) 
                     || (isset($is_search) && $is_search == false)
                 ) {
-                    $colspan = 7;
+                    $colspan = 8;
                 }
             @endphp
             <tr>
@@ -54,6 +56,14 @@
               </td>
               <td>{{ $order->date_export }}</td>
               <td>{{ $order->date_create }}</td>
+              <td>
+                  @if ($order->output_bill == 1)
+                  {{ dateStr($order->date_export_bill, true, DATE_FORMAT_YMD_SUB) }}
+                  @else
+                  No export bill
+                  @endif
+              </td>
+              <td>{!! $order->debt_limit !!}</td>
               <td>{{ $order->customer->short_name }}</td>
               @if (!isset($is_search) 
                 || (isset($is_search) && $is_search == false)

@@ -30,7 +30,7 @@
                value="{{ old( $form_name .'[id]', $$form_name['id'] ?? '') }}"
                />
         <div class="row">
-            <label class="control-label col-sm-3" for="{{ $form_name }}_order_code">Mã hóa đơn:</label>
+            <label id="label_{{ $form_name }}_order_code" class="control-label col-sm-3" for="{{ $form_name }}_order_code">Mã hóa đơn:</label>
             <div class="col-sm-5">
                 <input type="text"
                         id="{{ $form_name }}_order_code"
@@ -40,7 +40,21 @@
             </div>
         </div>
         <div class="row">
-            <label class="control-label col-sm-3" for="{{ $form_name }}_date_create">Ngày làm đơn:</label>
+            <label id="label_{{ $form_name }}_date_export_bill" class="control-label col-sm-3" for="{{ $form_name }}_date_export_bill">Ngày xuất hóa đơn:</label>
+            <div class="col-sm-5">
+                <input type="date"
+                        id="{{ $form_name }}_date_export_bill"
+                        name="{{ $form_name }}[date_export_bill]"
+                        placeholder="Input date_export_bill"
+                        value="{{ old( $form_name .'.date_export_bill', $$form_name['date_export_bill']?? '') }}" />
+                Xuất hóa đơn: <input type="checkbox" 
+                       name="{{ $form_name }}[output_bill][]"
+                       id="{{ $form_name }}_output_bill"
+                       value="1" />
+            </div>
+        </div>
+        <div class="row">
+            <label id="label_{{ $form_name }}_date_create" class="control-label col-sm-3" for="{{ $form_name }}_date_create">Ngày làm đơn:</label>
             <div class="col-sm-5">
                 <input type="datetime-local"
                         id="{{ $form_name }}_date_create"
@@ -50,7 +64,7 @@
             </div>
         </div>
         <div class="row">
-            <label class="control-label col-sm-3" for="{{ $form_name }}_date_export">Ngày xuất hàng:</label>
+            <label id="label_{{ $form_name }}_date_export" class="control-label col-sm-3" for="{{ $form_name }}_date_export">Ngày xuất hàng:</label>
             <div class="col-sm-5">
                 <input type="datetime-local"
                         id="{{ $form_name }}_date_export"
@@ -61,7 +75,7 @@
         </div>
         <!--list customer-->
         <div class="row">
-            <label class="control-label col-sm-3" for="{{ $form_name }}_date_export">Khách hàng:</label>
+            <label id="label_{{ $form_name }}_customer_id" class="control-label col-sm-3" for="{{ $form_name }}_date_export">Khách hàng:</label>
             <div class="col-sm-5">
                 <select id="{{ $form_name }}_customer_id"
                         class="select_search"
@@ -78,7 +92,7 @@
         </div>
         <!-- address delivery -->
         <div class="row">
-            <label class="control-label col-sm-3" for="{{ $form_name }}_address_delivery">Địa chỉ giao hàng:</label>
+            <label id="label_{{ $form_name }}_address_delivery" class="control-label col-sm-3" for="{{ $form_name }}_address_delivery">Địa chỉ giao hàng:</label>
             <div class="col-sm-7">
                 <textarea id="{{ $form_name }}_address_delivery"
                             name="{{ $form_name }}[address_delivery]"
@@ -88,7 +102,7 @@
         </div>
         <!-- contact info -->
         <div class="row">
-            <label class="control-label col-sm-3" for="{{ $form_name }}_contact_info">Thông tin liên lạc khách hàng:</label>
+            <label id="label_{{ $form_name }}_contact_info" class="control-label col-sm-3" for="{{ $form_name }}_contact_info">Thông tin liên lạc khách hàng:</label>
             <div class="col-sm-7">
                 <textarea id="{{ $form_name }}_contact_info"
                             name="{{ $form_name }}[contact_info]"
@@ -97,7 +111,8 @@
             </div>
         </div>
         <!-- list product -->
-        <table id="product_list" class="table table-bordered table-striped w100_percent">
+        <table id="{{ $form_name }}_product_list" 
+               class="table table-bordered table-striped w100_percent">
             <thead>
                 <tr>
                   <th>STT</th>
@@ -111,7 +126,7 @@
             <tbody>
                 @foreach($products['list'] as $key => $product)
                 <tr>
-                  <td>{{ $key }}</td>
+                  <td>{{ $key+1 }}</td>
                   <td>{!! $product->displayName !!}</td>
                   <td><input type="text" 
                             name="{{ $form_name }}[number][{{ $product->id }}]" 

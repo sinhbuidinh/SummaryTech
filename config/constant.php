@@ -20,6 +20,7 @@ defined('CONFIG_ARR_VALS') or define('CONFIG_ARR_VALS', [
     CONFIG_ARR_BY_NAME
 ]);
 
+defined('DATE_FORMAT_YMD_EMPTY') or define('DATE_FORMAT_YMD_EMPTY', '0000-00-00 00:00:00');
 defined('DATE_FORMAT_YMD') or define('DATE_FORMAT_YMD', 'Ymd');
 defined('DATE_FORMAT_YM') or define('DATE_FORMAT_YM', 'Ym');
 defined('DATE_FORMAT_YMD_SUB') or define('DATE_FORMAT_YMD_SUB', 'Y-m-d');

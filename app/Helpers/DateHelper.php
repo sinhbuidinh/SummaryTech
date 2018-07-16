@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 function dateStr($date, $req_date = true, $format = null)
 {
     if (empty($date)) {
@@ -12,6 +14,13 @@ function dateStr($date, $req_date = true, $format = null)
         $date = now(DEFAULT_TIMEZONE)->parse($date);
     }
     return $date->format($format);
+}
+
+function dateParse($input_date)
+{
+    $date = now(DEFAULT_TIMEZONE)->parse($input_date);
+
+    return $date;
 }
 
 function dateToday($format = null)
@@ -40,4 +49,13 @@ function dateAgo($month, $day = null, $format = null)
         return dateStr($date, true, $format);
     }
     return dateStr($date, false, $format);
+}
+
+function dateCalulateDays($date1, $date2)
+{
+    $date1_create = date_create($date1);
+    $date2_create = date_create($date2);
+
+    $interval = date_diff($date1_create, $date2_create);
+    return $interval->format('%R%a days');
 }

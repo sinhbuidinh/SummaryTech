@@ -17,31 +17,31 @@ class Product extends BaseModel
     public function getDisplayNameAttribute()
     {
         $disp_name = self::PRODUCT_TYPE_PRESS_BOARD_NAME;
-        
+
         //phủ gì
         $product_type = $this->product_type()->select('*')->get()->first();
         $deck_type = $product_type->name;
-        
+
         if (!empty($deck_type)) {
             $disp_name .= ' '.$deck_type;
         }
-        
+
         //code name
         $code_name = $this->code_name;
         if (!empty($code_name)) {
             $disp_name .= ' '.$code_name;
         }
-        
+
         //color
         $product_color_name = $this->getDisplayColor();
         if (!empty($product_color_name)) {
             $disp_name .= ' '.$product_color_name;
         }
-        
+
         //heightxwidthxlength(unit_size)
         $size = $this->getDisplaySizeProduct();
         $disp_name .= ' '.$size;
-        
+
         return $disp_name;
     }
     
