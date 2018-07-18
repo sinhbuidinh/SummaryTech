@@ -16,11 +16,17 @@
            href="{{ route('product_list') }}">Danh sách sản phẩm</a>
         <a class="product_manager child create {{ classOfLeftMenu('product_create') }}"
            href="{{ route('product_create') }}">Tạo sản phẩm mới</a>
+        @if (classOfLeftMenu('product_edit'))
+        <a class="product_manager child edit {{ classOfLeftMenu('product_edit') }}"
+           href="#">Chỉnh sửa sản phẩm</a>
+        @endif
+        <a class="product_manager child type_list {{ classOfLeftMenu('product_type_list') }}"
+           href="{{ route('product_type_list') }}">Danh sách ván ép</a>
         <a class="product_manager child create_type {{ classOfLeftMenu('product_create_type') }}"
            href="{{ route('product_create_type') }}">Tạo loại ván ép</a>
-        @if (classOfLeftMenu('product_edit'))
-        <a class="product_manager child edit {{ classOfLeftMenu('order_edit') }}"
-           href="#">Chỉnh sửa sản phẩm</a>
+        @if (classOfLeftMenu('product_type_edit'))
+        <a class="product_manager child type_edit {{ classOfLeftMenu('product_type_edit') }}"
+           href="#">Chỉnh sửa loại ván</a>
         @endif
         <h2 id="customer_manager" class="left"><span class="left_h2">Customer Manager</span></h2>
         <a class="customer_manager child list {{ classOfLeftMenu('customer_list') }}"

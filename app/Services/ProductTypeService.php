@@ -12,6 +12,7 @@ class ProductTypeService extends BaseService
     public function __construct()
     {
         $this->attr_accessor = [
+            'id',
             'name',
         ];
 
@@ -23,10 +24,31 @@ class ProductTypeService extends BaseService
 
         $this->product_type_repository = new ProductTypeRepository();
     }
+    
+    public function getProductTypeById($id)
+    {
+        $product_type_list = $this->product_type_repository->listAll([$id]);
+        $product_type = $product_type_list->first();
+
+        return $product_type;
+    }
+    
+    private function identifyDefaultEdit($product_type_id)
+    {
+        //is_edit
+        $product_type_info = $this->getProductTypeById($product_type_id)->toArray();
+        $this->default_params = $product_type_info;
+    }
 
     public function processData($request)
     {
         $request_data = $request->all();
+
+        $product_type_id = $request_data['product_type_id']?? null;
+        if (!empty($product_type_id)) {
+            $is_edit = true;
+            $this->identifyDefaultEdit($product_type_id);
+        }
 
         $this->initVariable($this->form_name, $this->attr_accessor, $this->default_params);
         $data[$this->form_name] = $this->initFormData();
@@ -55,13 +77,15 @@ class ProductTypeService extends BaseService
                 $last_data['result_insert'] = $result_insert['result'];
             }
         }
+        
+        $last_data['is_edit'] = $is_edit?? false;
 
         return $last_data;
     }
 
-    public function getListProductType($order = [])
+    public function getListProductType($id = [], $order = [])
     {
-        $product_type = $this->product_type_repository->listAll($order)->toArray();
+        $product_type = $this->product_type_repository->listAll($id, $order)->toArray();
         return $product_type;
     }
 

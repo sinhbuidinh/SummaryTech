@@ -1,18 +1,18 @@
 product_color:
     code:
+        no_color: 0
         red: 1
         blue: 2
         green: 3
         white: 4
         black: 5
-        no_color: 0
     name:
-        red: RED
-        blue: BLUE
-        green: GREEN
-        white: WHITE
-        black: BLACK
-        no_color: NO-COLOR
+        no_color: No-Color
+        red: Red
+        blue: Blue
+        green: Green
+        white: White
+        black: Black
 
 product_come_from:
     code:

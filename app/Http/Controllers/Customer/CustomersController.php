@@ -45,11 +45,6 @@ class CustomersController extends BaseController
         }
 
         $assign_data = $this->customer_service->processData($request);
-        if ( isset($assign_data['result_insert'])
-            && $assign_data['result_insert'] == true
-        ) {
-            return redirect(route('customer_list'));
-        }
 
         return view('customer.create', $assign_data);
     }

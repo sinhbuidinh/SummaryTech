@@ -13,6 +13,7 @@ class ProductService extends BaseService
     public function __construct()
     {
         $this->attr_accessor = [
+            'id',
             'deck_type',
             'code_name',
             'is_foreign',
@@ -39,10 +40,31 @@ class ProductService extends BaseService
         $this->product_repository = new ProductRepository();
         $this->product_type_service = getService('product_type_service');
     }
+    
+    public function getProductById($id)
+    {
+        $product_list = $this->product_repository->listAll([$id]);
+        $product = $product_list->first();
+
+        return $product;
+    }
+    
+    private function identifyDefaultEdit($product_id)
+    {
+        //is_edit
+        $product_info = $this->getProductById($product_id)->toArray();
+        $this->default_params = $product_info;
+    }
 
     public function processData($request)
     {
         $request_data = $request->all();
+
+        $product_id = $request_data['product_id']?? null;
+        if (!empty($product_id)) {
+            $is_edit = true;
+            $this->identifyDefaultEdit($product_id);
+        }
 
         $this->initVariable($this->form_name, $this->attr_accessor, $this->default_params);
         $data[$this->form_name] = $this->initFormData();
@@ -72,6 +94,11 @@ class ProductService extends BaseService
                 $last_data['result_insert'] = $result_insert['result'];
             }
         }
+
+        $last_data['is_edit']           = $is_edit?? false;
+        $last_data['product_color']     = $this->getProductColorList();
+        $last_data['product_come_from'] = $this->getForeignLang();
+        $last_data['deck_type']         = $this->getDeckType();
 
         return $last_data;
     }

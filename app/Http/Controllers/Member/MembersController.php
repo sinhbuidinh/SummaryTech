@@ -44,12 +44,8 @@ class MembersController extends BaseController
             throw new Exception('Invalid input');
         }
 
+        //get data info loading
         $assign_data = $this->member_service->processData($request);
-        if ( isset($assign_data['result_insert'])
-            && $assign_data['result_insert'] == true
-        ) {
-            return redirect(route('customer_list'));
-        }
 
         return view('member.create', $assign_data);
     }

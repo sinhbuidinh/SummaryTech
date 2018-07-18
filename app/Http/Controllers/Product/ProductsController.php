@@ -19,7 +19,16 @@ class ProductsController extends BaseController
 
     public function edit(Request $request)
     {
-        dd($request->all());
+        $request_data = $request->all();
+        $product_id = old('product_form.id', old('product_id', $request_data['product_id']?? null));
+
+        if (empty($product_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $assign_data = $this->product_service->processData($request);
+
+        return view('product.create', $assign_data);
     }
 
     public function index(Request $request)
@@ -50,8 +59,31 @@ class ProductsController extends BaseController
         if ( isset($data['result_insert'])
             && $data['result_insert'] == true
         ) {
-            return redirect(route('product_create_type'));
+            return redirect(route('product_type_list'));
         }
+
+        return view('product.type.create', $data);
+    }
+    
+    public function productTypeList(Request $request)
+    {
+        $data['list'] = $this->product_type_service->getListProductType();
+        $data['request'] = $request->all();
+
+        //display all product
+        return view('product.type.show', $data);
+    }
+    
+    public function productTypeEdit(Request $request)
+    {
+        $request_data = $request->all();
+        $product_type_id = old('product_type_form.id', old('product_type_id', $request_data['product_type_id']?? null));
+
+        if (empty($product_type_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $data = $this->product_type_service->processData($request);
 
         return view('product.type.create', $data);
     }

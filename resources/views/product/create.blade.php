@@ -19,6 +19,11 @@
           style="width: 100%"
           >
         @csrf
+        <input type="hidden" 
+               id="{{ $form_name }}_id" 
+               name="{{ $form_name }}[id]" 
+               value="{{ old( $form_name .'.id', $$form_name['id'] ?? '') }}"
+               />
         <div class="row">
             <label class="control-label col-sm-2" for="{{ $form_name }}_deck_type">Loại ván ép:</label>
             <div class="col-sm-5">
@@ -56,12 +61,12 @@
             <label class="control-label col-sm-2" for="{{ $form_name }}_color">Màu:</label>
             <div class="col-sm-5">
                 <select name="{{ $form_name }}[color]" id="{{ $form_name }}_color">
-                    <option value="0">Default</option>
-                    <option value="1">White</option>
-                    <option value="2">Red</option>
-                    <option value="3">Green</option>
-                    <option value="4">Blue</option>
-                    <option value="5">Black</option>
+                    @foreach ($product_color as $code => $name)
+                    <option @if (old( $form_name . '.color', $$form_name['color']) == $code)
+                                selected="selected"
+                            @endif
+                        value="{{ $code }}">{{ $name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

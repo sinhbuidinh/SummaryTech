@@ -1,7 +1,7 @@
 @extends('layout.base')
 
-@section('title', 'Product list')
-@section('title_page', 'Danh sách sản phẩm')
+@section('title', 'Product Type list')
+@section('title_page', 'Danh sách ván ép')
 
 @section('custom_style')
     <link rel="stylesheet" href="{{ asset('css/product/show.css') }}" />
@@ -21,26 +21,18 @@
                     <tr>
                       <th class="w10_percent">ID</th>
                       <th class="w40_percent">Loại ván</th>
-                      <th class="w40_percent">Tên sản phẩm</th>
-                      <th class="w10_percent">Nội nhập/Ngoại nhập</th>
-                      <th class="w10_percent">Màu</th>
-                      <th class="w10_percent">(Cao)x(Rộng)x(Dài)(đơn vị)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($list as $product)
+                    @foreach($list as $product_type)
                     <tr>
-                      <td>{{ $product->id }}
+                      <td>{{ $product_type['id'] }}
                             <a class="btn btn-info btn-sm edit_product" 
-                               href="{{ route('product_edit', ['product_id' => $product->id]) }}" >
+                               href="{{ route('product_type_edit', ['product_type_id' => $product_type['id']]) }}" >
                               Edit
                             </a>
                       </td>
-                      <td>{{ $deck_type[$product->deck_type]['name'] }}</td>
-                      <td>{{ $product->code_name }}</td>
-                      <td>{{ $product_come_from[$product->is_foreign] }}</td>
-                      <td class="text-{{ strtolower($product_color[$product->color]) }}">{{ $product_color[$product->color] }}</td>
-                      <td>{{ $product->height }}x{{ $product->width }}x{{ $product->length }}({{ $product->unit_size }})</td>
+                      <td>{{ $product_type['name'] }}</td>
                     </tr>
                     @endforeach
                 </tbody>

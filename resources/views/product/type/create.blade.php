@@ -12,6 +12,11 @@
           style="width: 100%"
           >
         @csrf
+        <input type="hidden" 
+               id="{{ $form_name }}_id" 
+               name="{{ $form_name }}[id]" 
+               value="{{ old( $form_name .'.id', $$form_name['id'] ?? '') }}"
+               />
         @if (!empty($list_product_type_old))
         <div class="row">
             <label class="control-label col-sm-4" for="{{ $form_name }}_form_name">Danh sách ván ép đã có:</label>

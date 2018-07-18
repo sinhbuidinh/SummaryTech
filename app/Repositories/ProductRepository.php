@@ -27,8 +27,8 @@ class ProductRepository extends BaseRepository
         ];
     }
 
-    public function listAll()
+    public function listAll($id)
     {
-        return $this->getList();
+        return $this->getList($id);
     }
 }
