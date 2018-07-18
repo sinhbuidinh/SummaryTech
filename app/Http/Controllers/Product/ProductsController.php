@@ -17,6 +17,11 @@ class ProductsController extends BaseController
         $this->product_type_service = getService('product_type_service');
     }
 
+    public function edit(Request $request)
+    {
+        dd($request->all());
+    }
+
     public function index(Request $request)
     {
         $data = $this->product_service->listProduct();

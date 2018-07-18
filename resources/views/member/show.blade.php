@@ -18,7 +18,7 @@
             <table class="table table-bordered table-striped w100_percent">
                 <thead>
                     <tr>
-                      <!--<th class="w10_percent">ID</th>-->
+                      <th class="w10_percent">ID</th>
                       <th class="w30_percent">Tên nhân viên</th>
                       <th class="w20_percent">Số điện thoại</th>
                       <th class="w30_percent">Địa chỉ</th>
@@ -26,13 +26,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($list as $customer)
+                    @foreach($list as $member)
                     <tr>
-                      <!--<td>{{ $customer->id }}</td>-->
-                      <th class="w30_percent">{{ $customer->name }}</th>
-                      <th class="w20_percent">{{ $customer->telephone }}</th>
-                      <th class="w30_percent">{{ $customer->address }}</th>
-                      <th class="w10_percent">{{ $member_group_list[$customer->group_type] ?? '' }}</th>
+                      <td>{{ $member->id }}
+                            <a class="btn btn-info btn-sm edit_member" 
+                               href="{{ route('member_edit', ['member_id' => $member->id]) }}" >
+                              Edit
+                            </a>
+                      </td>
+                      <th class="w30_percent">{{ $member->name }}</th>
+                      <th class="w20_percent">{{ $member->telephone }}</th>
+                      <th class="w30_percent">{{ $member->address }}</th>
+                      <th class="w10_percent">{{ $member_group_list[$member->group_type] ?? '' }}</th>
                     </tr>
                     @endforeach
                 </tbody>

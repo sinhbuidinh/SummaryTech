@@ -28,6 +28,8 @@ Route::prefix('product')->namespace('Product')->name('product')->group(function 
     Route::get('/', 'ProductsController@index')->name('_home');
     Route::get('/list', 'ProductsController@index')->name('_list');
 
+    Route::get('/edit', 'ProductsController@edit')->name('_edit');
+
     Route::get('/create', 'ProductsController@create')->name('_create');
     Route::post('/create', 'ProductsController@create')->name('_create_post');
 
@@ -46,6 +48,8 @@ Route::prefix('customer')->namespace('Customer')->name('customer')->group(functi
 
 Route::prefix('member')->namespace('Member')->name('member')->group(function () {
     Route::get('/list', 'MembersController@index')->name('_list');
+    
+    Route::get('/edit', 'MembersController@edit')->name('_edit');
 
     Route::get('/create', 'MembersController@create')->name('_create');
     Route::post('/create', 'MembersController@create')->name('_create_post');

@@ -11,6 +11,7 @@ class MemberService extends BaseService
     public function __construct()
     {
         $this->attr_accessor = [
+            'id',
             'name',
             'group_type',
             'address',
@@ -37,9 +38,30 @@ class MemberService extends BaseService
         return $data;
     }
 
+    public function getMemberById($id)
+    {
+        $member_list = $this->member_repository->listAll([$id]);
+        $member = $member_list->first();
+
+        return $member;
+    }
+
+    private function identifyDefaultEdit($member_id)
+    {
+        //is_edit
+        $member_info = $this->getMemberById($member_id)->toArray();
+        $this->default_params = $member_info;
+    }
+    
     public function processData($request)
     {
         $request_data = $request->all();
+
+        $member_id = $request_data['member_id']?? null;
+        if (!empty($member_id)) {
+            $is_edit = true;
+            $this->identifyDefaultEdit($member_id);
+        }
 
         $this->initVariable($this->form_name, $this->attr_accessor, $this->default_params);
         $data[$this->form_name] = $this->initFormData();
@@ -67,6 +89,7 @@ class MemberService extends BaseService
         }
 
         $last_data['member_group_list'] = $this->getMemberGroupList();
+        $last_data['is_edit'] = $is_edit?? false;
 
         return $last_data;
     }

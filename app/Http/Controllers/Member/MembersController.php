@@ -34,4 +34,23 @@ class MembersController extends BaseController
 
         return view('member.create', $assign_data);
     }
+
+    public function edit(Request $request)
+    {
+        $request_data = $request->all();
+        $member_id = old('member_id', $request_data['member_id']?? null);
+
+        if (empty($member_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $assign_data = $this->member_service->processData($request);
+        if ( isset($assign_data['result_insert'])
+            && $assign_data['result_insert'] == true
+        ) {
+            return redirect(route('customer_list'));
+        }
+
+        return view('member.create', $assign_data);
+    }
 }
