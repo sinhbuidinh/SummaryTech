@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Services\BaseService;
 use App\Repositories\ProductRepository;
+use Exception;
 
 class ProductService extends BaseService
 {
@@ -52,8 +53,12 @@ class ProductService extends BaseService
     private function identifyDefaultEdit($product_id)
     {
         //is_edit
-        $product_info = $this->getProductById($product_id)->toArray();
-        $this->default_params = $product_info;
+        $product_info = $this->getProductById($product_id);
+        if (!empty($product_info)) {
+            $this->default_params = $product_info->toArray();
+        } else {
+            throw new Exception('Product_id không hợp lệ!!!');
+        }
     }
 
     public function processData($request)
@@ -75,7 +80,7 @@ class ProductService extends BaseService
         $order = [
             '`order` DESC'
         ];
-        $last_data['product_type_list'] = $this->product_type_service->getListProductType($order);
+        $last_data['product_type_list'] = $this->product_type_service->getListProductType([], $order);
 
         if (!empty($last_data[$this->form_name]) 
             && $request->isMethod('post')

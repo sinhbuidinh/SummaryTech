@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Services\BaseService;
 use App\Repositories\CustomerRepository;
+use Exception;
 
 class CustomerService extends BaseService
 {
@@ -97,6 +98,10 @@ class CustomerService extends BaseService
     public function getCustomerById($id)
     {
         $customer_list = $this->customer_repository->listAll([$id]);
+        if (blank($customer_list)) {
+            throw new Exception('customer_id không hợp lệ!!!');
+        }
+
         $customer = $customer_list->first();
 
         return $customer;

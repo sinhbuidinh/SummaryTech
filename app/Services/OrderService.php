@@ -81,6 +81,10 @@ class OrderService extends BaseService
             'date_export DESC',
             'date_create DESC',
         ]);
+        if (blank($order_list)) {
+            throw new Exception('order_id không hợp lệ!!!');
+        }
+        
         $order = $order_list->first();
 
         $order->date_create = dateStr($order->date_create, true, FORMAT_DATETIME_LOCAL);

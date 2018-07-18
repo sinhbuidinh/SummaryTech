@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Services\BaseService;
 use App\Repositories\ProductTypeRepository;
+use Exception;
 
 class ProductTypeService extends BaseService
 {
@@ -36,8 +37,12 @@ class ProductTypeService extends BaseService
     private function identifyDefaultEdit($product_type_id)
     {
         //is_edit
-        $product_type_info = $this->getProductTypeById($product_type_id)->toArray();
-        $this->default_params = $product_type_info;
+        $product_type_info = $this->getProductTypeById($product_type_id);
+        if (!empty($product_type_info)) {
+            $this->default_params = $product_type_info->toArray();
+        } else {
+            throw new Exception('Product_type_id không hợp lệ!!!');
+        }
     }
 
     public function processData($request)

@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Services\BaseService;
 use App\Repositories\MemberRepository;
+use Exception;
 
 class MemberService extends BaseService
 {
@@ -49,8 +50,12 @@ class MemberService extends BaseService
     private function identifyDefaultEdit($member_id)
     {
         //is_edit
-        $member_info = $this->getMemberById($member_id)->toArray();
-        $this->default_params = $member_info;
+        $member_info = $this->getMemberById($member_id);
+        if (!blank($member_info)) {
+            $this->default_params = $member_info->toArray();
+        } else {
+            throw new Exception('member_id không hợp lệ!!!');
+        }
     }
     
     public function processData($request)
