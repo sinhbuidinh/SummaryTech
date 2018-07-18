@@ -31,7 +31,10 @@
                     <option value="0">Default</option>
                     @if (!empty($product_type_list))
                     @foreach ($product_type_list as $product_type)
-                    <option value="{{ $product_type['id'] }}">{{ $product_type['name'] }}</option>
+                    <option @if ($product_type['id'] == old( $form_name .'.deck_type', $$form_name['deck_type'] ?? 0))
+                             selected="selected"
+                        @endif
+                        value="{{ $product_type['id'] }}">{{ $product_type['name'] }}</option>
                     @endforeach
                     @endif
                 </select>

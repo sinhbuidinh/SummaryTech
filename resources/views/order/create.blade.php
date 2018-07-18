@@ -75,7 +75,7 @@
         </div>
         <!--list customer-->
         <div class="row">
-            <label id="label_{{ $form_name }}_customer_id" class="control-label col-sm-3" for="{{ $form_name }}_date_export">Khách hàng:</label>
+            <label id="label_{{ $form_name }}_customer_id" class="control-label col-sm-3" for="{{ $form_name }}_customer_id">Khách hàng:</label>
             <div class="col-sm-5">
                 <select id="{{ $form_name }}_customer_id"
                         class="select_search"
