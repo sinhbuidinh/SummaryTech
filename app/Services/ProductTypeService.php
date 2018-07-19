@@ -15,6 +15,7 @@ class ProductTypeService extends BaseService
         $this->attr_accessor = [
             'id',
             'name',
+            'order',
         ];
 
         $this->default_params = [
@@ -38,6 +39,7 @@ class ProductTypeService extends BaseService
     {
         //is_edit
         $product_type_info = $this->getProductTypeById($product_type_id);
+
         if (!empty($product_type_info)) {
             $this->default_params = $product_type_info->toArray();
         } else {
@@ -82,7 +84,7 @@ class ProductTypeService extends BaseService
                 $last_data['result_insert'] = $result_insert['result'];
             }
         }
-        
+
         $last_data['is_edit'] = $is_edit?? false;
 
         return $last_data;

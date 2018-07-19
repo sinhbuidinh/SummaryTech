@@ -23,7 +23,7 @@
             <div class="col-sm-3">
                 <select>
                     @foreach ($list_product_type_old as $key => $val)
-                        <option value="{{ $val['id'] }}">{{ $val['name'] }}</option>
+                        <option value="{{ $val['id'] }}">{{ $val['name'] }} ({{ $val['order'] }})</option>
                     @endforeach
                 </select>
             </div>
@@ -37,7 +37,18 @@
                      id="{{ $form_name }}_name"
                      name="{{ $form_name }}[name]"
                      placeholder="Input product type name"
-                     value="{{ old($form_name .'[name]', $$form_name['name']) }}"/>
+                     value="{{ old($form_name .'.name', $$form_name['name']) }}"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="control-label col-sm-2" for="{{ $form_name }}_order">Thứ tự hiển thị:</label>
+            <div class="col-sm-5">
+              <input type="text"
+                     class="form-control"
+                     id="{{ $form_name }}_order"
+                     name="{{ $form_name }}[order]"
+                     placeholder="Nhập thứ tự ưu tiên"
+                     value="{{ old($form_name .'.order', $$form_name['order']) }}"/>
             </div>
         </div>
         <!-- button -->
