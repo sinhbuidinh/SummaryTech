@@ -64,6 +64,8 @@ class MembersController extends BaseController
 
         if ($assign_data == true) {
             return redirect(route('member_list'));
+        } else {
+            $assign_data = $this->member_service->processData($request);
         }
 
         return view('member.create', $assign_data);

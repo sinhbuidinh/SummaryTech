@@ -34,6 +34,11 @@ class ProductRepository extends BaseRepository
 
     public function delete($id)
     {
-        return $this->model->where('id', '=', $id)->delete();
+        $product = $this->model->where('id', '=', $id);
+        if (blank($product)) {
+            return 0;
+        }
+
+        return $product->delete();
     }
 }

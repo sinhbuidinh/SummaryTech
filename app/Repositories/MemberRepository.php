@@ -34,6 +34,11 @@ class MemberRepository extends BaseRepository
     
     public function delete($id)
     {
-        return $this->model->where('id', '=', $id)->delete();
+        $member = $this->model->where('id', '=', $id);
+        if (blank($member)) {
+            return 0;
+        }
+
+        return $member->delete();
     }
 }

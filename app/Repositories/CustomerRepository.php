@@ -39,6 +39,11 @@ class CustomerRepository extends BaseRepository
 
     public function delete($id)
     {
-        return $this->model->where('id', '=', $id)->delete();
+        $customer = $this->model->where('id', '=', $id);
+        if (blank($customer)) {
+            return 0;
+        }
+
+        return $customer->delete();
     }
 }

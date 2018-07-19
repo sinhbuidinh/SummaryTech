@@ -64,6 +64,8 @@ class CustomersController extends BaseController
 
         if ($assign_data == true) {
             return redirect(route('customer_list'));
+        } else {
+            $assign_data = $this->customer_service->processData($request);
         }
 
         return view('customer.create', $assign_data);
