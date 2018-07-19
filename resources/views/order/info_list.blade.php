@@ -4,6 +4,7 @@
         <tr>
 <!--              <th>STT</th>-->
             <th>Order code</th>
+            <th>Action</th>
             <th>Order NO</th>
             <th>Ngày xuất hàng</th>
             <th>Ngày tạo order</th>
@@ -24,11 +25,11 @@
     <tbody>
         @if (blank($orders))
             @php
-                $colspan = 9;
+                $colspan = 10;
                 if (!isset($is_search) 
                     || (isset($is_search) && $is_search == false)
                 ) {
-                    $colspan = 8;
+                    $colspan = 9;
                 }
             @endphp
             <tr>
@@ -40,20 +41,20 @@
               <!--<td>{{ $index + 1}}</td>-->
               <td>{{ $order->order_code }}</td>
               <td>
-                    <form id="edit_{{ $order->id }}" action="{{ route('order_edit', ['order_id' => $order->id]) }}">
-                        {{ $order->id }}
-                        <input type="hidden" name="order_id" value="{{ $order->id }}" />
-                        <button type="submit" 
-                                class="btn btn-default btn-sm edit_order" >
-                          <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                          @if (isset($is_search))
-                          Detail
-                          @else
-                          Edit
-                          @endif
-                        </button>
-                    </form>
-              </td>
+                    <a class="btn btn-info btn-sm edit_order" 
+                       href="{{ route('order_edit', ['order_id' => $order->id]) }}" >
+                        @if (isset($is_search))
+                            Detail
+                        @else
+                            Edit
+                        @endif
+                    </a>
+                    <a class="btn btn-info btn-sm delete_order" 
+                       href="{{ route('order_delete', ['order_id' => $order->id]) }}" >
+                      Delete
+                    </a>
+                </td>
+              <td>{{ $order->id }}</td>
               <td>{{ $order->date_export }}</td>
               <td>{{ $order->date_create }}</td>
               <td>

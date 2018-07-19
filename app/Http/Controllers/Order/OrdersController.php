@@ -49,6 +49,27 @@ class OrdersController extends BaseController
         return view('order.create', $assign_data);
     }
 
+    public function delete(Request $request)
+    {
+        $request_data = $request->all();
+        $order_id = old('order_id', $request_data['order_id']?? null);
+
+        if (empty($order_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        //get data info loading
+        $assign_data = $this->order_service->deleteOrder($order_id);
+
+        if ($assign_data == true) {
+            return redirect(route('order_list'));
+        } else {
+            $assign_data = $this->order_service->processData($request);
+        }
+
+        return view('customer.create', $assign_data);
+    }
+
     public function owe(Request $request)
     {
         $last_data = $this->order_service->processOweSearch($request);

@@ -74,7 +74,17 @@ class OrderService extends BaseService
 
         return $assign_data;
     }
-    
+
+    public function deleteOrder($order_id)
+    {
+        $result = $this->order_repository->delete($order_id);
+        if ($result > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getOrderById($id)
     {
         $order_list = $this->order_repository->listAll([$id], [

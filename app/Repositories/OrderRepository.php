@@ -29,6 +29,16 @@ class OrderRepository extends BaseRepository
             ]
         ];
     }
+    
+    public function delete($order_id)
+    {
+        $order = $this->model->where('id', '=', $order_id);
+        if (blank($order)) {
+            return 0;
+        }
+
+        return $order->delete();
+    }
 
     public function insert($order_data)
     {
