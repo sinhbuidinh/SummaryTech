@@ -36,4 +36,9 @@ class CustomerRepository extends BaseRepository
     {
         return $this->getList($id, $order);
     }
+
+    public function delete($id)
+    {
+        return $this->model->where('id', '=', $id)->delete();
+    }
 }

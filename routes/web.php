@@ -29,10 +29,12 @@ Route::prefix('product')->namespace('Product')->name('product')->group(function 
     Route::get('/list', 'ProductsController@index')->name('_list');
 
     Route::get('/edit', 'ProductsController@edit')->name('_edit');
+    Route::get('/delete', 'ProductsController@delete')->name('_delete');
 
     Route::get('/create', 'ProductsController@create')->name('_create');
     Route::post('/create', 'ProductsController@create')->name('_create_post');
 
+    Route::get('/type_delete', 'ProductsController@deleteType')->name('_type_delete');
     Route::get('/type_edit', 'ProductsController@productTypeEdit')->name('_type_edit');
     Route::get('/type_list', 'ProductsController@productTypeList')->name('_type_list');
 
@@ -44,6 +46,7 @@ Route::prefix('customer')->namespace('Customer')->name('customer')->group(functi
     Route::get('/list', 'CustomersController@index')->name('_list');
 
     Route::get('/edit', 'CustomersController@edit')->name('_edit');
+    Route::get('/delete', 'CustomersController@delete')->name('_delete');
 
     Route::get('/create', 'CustomersController@create')->name('_create');
     Route::post('/create', 'CustomersController@create')->name('_create_post');

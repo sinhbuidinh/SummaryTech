@@ -25,6 +25,7 @@
                       <th class="w10_percent">Số điện thoại liên hệ</th>
                       <th class="w10_percent">Thông tin người liên hệ</th>
                       <th class="w10_percent">Nhân viên quản lý khách hàng</th>
+                      <th class="w10_percent">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,10 +33,6 @@
                     <tr>
                         <td>
                             {{ $customer->id }}
-                            <a class="btn btn-info btn-sm edit_customer" 
-                               href="{{ route('customer_edit', ['customer_id' => $customer->id]) }}" >
-                              Edit
-                            </a>
                         </td>
                         <th class="w40_percent">{{ $customer->company_name }}</th>
                         <th class="w20_percent">{{ $customer->short_name }}</th>
@@ -43,6 +40,16 @@
                         <th class="w10_percent">{{ $customer->telephone ?? '' }}</th>
                         <th class="w10_percent">{{ $customer->contact_info }}</th>
                         <th class="w10_percent">{{ $customer->member->name ?? '' }}:{{ $customer->member->telephone ?? '' }}</th>
+                        <th class="w10_percent">
+                            <a class="btn btn-info btn-sm edit_customer" 
+                               href="{{ route('customer_edit', ['customer_id' => $customer->id]) }}" >
+                              Edit
+                            </a>
+                            <a class="btn btn-info btn-sm delete_customer" 
+                               href="{{ route('customer_delete', ['customer_id' => $customer->id]) }}" >
+                              Delete
+                            </a>
+                        </th>
                     </tr>
                     @endforeach
                 </tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
+use Exception;
 
 class CustomersController extends BaseController
 {
@@ -45,6 +46,25 @@ class CustomersController extends BaseController
         }
 
         $assign_data = $this->customer_service->processData($request);
+
+        return view('customer.create', $assign_data);
+    }
+    
+    public function delete(Request $request)
+    {
+        $request_data = $request->all();
+        $customer_id = old('customer_id', $request_data['customer_id']?? null);
+
+        if (empty($customer_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        //get data info loading
+        $assign_data = $this->customer_service->deleteCustomer($customer_id);
+
+        if ($assign_data == true) {
+            return redirect(route('customer_list'));
+        }
 
         return view('customer.create', $assign_data);
     }

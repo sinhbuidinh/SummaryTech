@@ -39,6 +39,16 @@ class CustomerService extends BaseService
         $this->member_service = getService('member_service');
     }
 
+    public function deleteCustomer($customer_id)
+    {
+        $result = $this->customer_repository->delete($customer_id);
+        if ($result > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function listCustomer()
     {
         $data['list'] = $this->customer_repository->listAll();
