@@ -49,4 +49,23 @@ class MembersController extends BaseController
 
         return view('member.create', $assign_data);
     }
+    
+    public function delete(Request $request)
+    {
+        $request_data = $request->all();
+        $member_id = old('member_id', $request_data['member_id']?? null);
+
+        if (empty($member_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        //get data info loading
+        $assign_data = $this->member_service->deleteMember($member_id);
+
+        if ($assign_data == true) {
+            return redirect(route('member_list'));
+        }
+
+        return view('member.create', $assign_data);
+    }
 }

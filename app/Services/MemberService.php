@@ -30,6 +30,16 @@ class MemberService extends BaseService
 
         $this->member_repository = new MemberRepository();
     }
+    
+    public function deleteMember($member_id)
+    {
+        $result = $this->member_repository->delete($member_id);
+        if ($result > 0) {
+            return true;
+        }
+
+        return false;
+    }
 
     public function listMember()
     {
