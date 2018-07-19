@@ -28,11 +28,16 @@ class Order extends BaseModel
         }
 
         //date debt
-        $date_debt_no = $this->customer->debt;
-
+        if (!blank($this->customer)) {
+            $date_debt_no = $this->customer->debt;
+        } else {
+            $date_debt_no = 0;
+        }
+        
         //call from date_export_bill
         if (empty($date_calculate)
             || $date_calculate == DATE_FORMAT_YMD_EMPTY
+            || $date_debt_no == 0
         ) {
             return $date_debt_no;
         }

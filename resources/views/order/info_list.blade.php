@@ -64,7 +64,11 @@
                   @endif
               </td>
               <td>{!! $order->debt_limit !!}</td>
-              <td>{{ $order->customer->short_name }}</td>
+              <td>
+                  @if (!blank($order->customer))
+                  {{ $order->customer->short_name }}
+                  @endif
+              </td>
               @if (!isset($is_search) 
                 || (isset($is_search) && $is_search == false)
               )
