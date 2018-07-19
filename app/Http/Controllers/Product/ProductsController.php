@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
+use Exception;
 
 class ProductsController extends BaseController
 {
@@ -27,6 +28,25 @@ class ProductsController extends BaseController
         }
 
         $assign_data = $this->product_service->processData($request);
+
+        return view('product.create', $assign_data);
+    }
+    
+    public function delete(Request $request)
+    {
+        $request_data = $request->all();
+        $product_id = old('product_form.id', old('product_id', $request_data['product_id']?? null));
+
+        if (empty($product_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $assign_data = $this->product_service->deleteProduct($product_id);
+        if ($assign_data == true) {
+            return redirect(route('product_list'));
+        } else {
+            $assign_data = $this->product_service->processData($request);
+        }
 
         return view('product.create', $assign_data);
     }
@@ -63,6 +83,25 @@ class ProductsController extends BaseController
         }
 
         return view('product.type.create', $data);
+    }
+    
+    public function deleteType(Request $request)
+    {
+        $request_data = $request->all();
+        $product_type_id = old('product_type_form.id', old('product_type_id', $request_data['product_type_id']?? null));
+
+        if (empty($product_type_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $assign_data = $this->product_service->deleteProductType($product_type_id);
+        if ($assign_data == true) {
+            return redirect(route('product_type_list'));
+        } else {
+            $assign_data = $this->product_type_service->processData($request);
+        }
+
+        return view('product.type.create', $assign_data);
     }
     
     public function productTypeList(Request $request)

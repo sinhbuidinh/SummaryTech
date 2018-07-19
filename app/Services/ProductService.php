@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Services\BaseService;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProductTypeRepository;
 use Exception;
 
 class ProductService extends BaseService
@@ -39,7 +40,28 @@ class ProductService extends BaseService
         $this->form_name = 'product_form';
 
         $this->product_repository = new ProductRepository();
+        $this->product_type_repository = new ProductTypeRepository();
         $this->product_type_service = getService('product_type_service');
+    }
+    
+    public function deleteProduct($product_id)
+    {
+        $result = $this->product_repository->delete($product_id);
+        if ($result > 0) {
+            return true;
+        }
+
+        return false;
+    }
+    
+    public function deleteProductType($product_type_id)
+    {
+        $result = $this->product_type_repository->delete($product_type_id);
+        if ($result > 0) {
+            return true;
+        }
+
+        return false;
     }
     
     public function getProductById($id)

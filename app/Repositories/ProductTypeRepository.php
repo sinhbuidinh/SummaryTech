@@ -30,4 +30,14 @@ class ProductTypeRepository extends BaseRepository
     {
         return $this->getList($id, $order);
     }
+
+    public function delete($id)
+    {
+        $product_type = $this->model->where('id', '=', $id);
+        if (blank($product_type)) {
+            return 0;
+        }
+
+        return $product_type->delete();
+    }
 }
