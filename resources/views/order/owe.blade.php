@@ -30,6 +30,7 @@
         @if (isset($search_by['date']))
         <input type="hidden" name="search_by[date]" value="{{ $search_by['date'] }}" />
         @endif
+        <input type="hidden" name="search_by[is_export]" value="0" />
     </form>
     <div class="row">
         <div class="row w50_percent">
@@ -85,6 +86,11 @@
                     }
                 @endphp
                 <input type="date" id="date" name="search_by[date]" value="{{ $date }}" />
+            </div>
+        </div>
+        <div class="row" style="margin-left: 50px;">
+            <div class="col-sm-2">
+                <button id="export_owe_search" class="btn btn-primary">Export</button>
             </div>
         </div>
     </div>

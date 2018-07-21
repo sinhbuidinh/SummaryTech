@@ -73,5 +73,7 @@ Route::prefix('order')->namespace('Order')->name('order')->group(function () {
 
     Route::get('/create', 'OrdersController@create')->name('_create');
     Route::post('/create', 'OrdersController@create')->name('_create_post');
+    
+    Route::post('/export', 'OrdersController@export')->name('_export');
 });
 

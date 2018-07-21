@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    //handle btn export
+    $('#export_owe_search').on('click', function(){
+        var form = $('form#search');
+        $('form#search input[type="hidden"][name="search_by[is_export]"]').val(1);
+
+        form.submit();
+    });
+    
     //handle when choosing customer or order_code
     $('select#company, select#order_code').on('change', function(){
         var val_search = $(this).val();

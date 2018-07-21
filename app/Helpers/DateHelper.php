@@ -1,7 +1,5 @@
 <?php
 
-use Carbon\Carbon;
-
 function dateStr($date, $req_date = true, $format = null)
 {
     if (empty($date)) {

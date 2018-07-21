@@ -8,6 +8,8 @@ use App\Repositories\OrderProductRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
+use Maatwebsite\Excel\Facades\Excel;
+
 class OrderService extends BaseService
 {
     private $order_repository;
@@ -350,9 +352,39 @@ class OrderService extends BaseService
         return $result;
     }
     
+    private function checkingExportOweSearch($request)
+    {
+        $request_data = $request->all();
+        $search_by = $request_data['search_by'] ?? [];
+
+        if (empty($search_by['is_export'])) {
+            return false;
+        }
+
+        $file_name = '';
+        if (!empty($search_by['name'])) {
+            $file_name .= $search_by['name'];
+        }
+
+        if (!empty($search_by['order_code'])) {
+            $file_name .= '_with_code_'.$search_by['order_code'];
+        }
+
+        if (!empty($file_name)) {
+            $file_name .= '_'.dateToday(DATE_FORMAT_YMD).'.xls';
+        }
+
+        $data['file_name'] = str_replace(' ', '', $file_name);
+
+        return $data;
+    }
+    
     public function processOweSearch($request)
     {
         $last_data = $this->getInfoDispList($request);
+
+        //loading export info
+        $last_data['export_info'] = $this->checkingExportOweSearch($request);
 
         //show list order by customer name or order_code
         $list_order = $this->getOrderList();
@@ -365,7 +397,7 @@ class OrderService extends BaseService
         //search
         $result_search = $this->searchOrder($data_search);
         $last_data['result_search'] = $result_search;
-        
+
         if (!empty($data_search)) {
             $last_data['cond_text'] = $this->generateCondText($data_search);
         }
@@ -440,5 +472,9 @@ class OrderService extends BaseService
 
         return $sql;
     }
-    
+
+    public function processImportOrder($request)
+    {
+        dd($request->all());
+    }
 }

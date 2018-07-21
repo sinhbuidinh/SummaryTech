@@ -9,11 +9,13 @@ use Exception;
 class OrdersController extends BaseController
 {
     private $order_service;
+    private $order_export_service;
 
     public function __construct()
     {
         parent::__construct();
         $this->order_service = getService('order_service');
+        $this->order_export_service = getService('order_export_service');
     }
 
     public function create(Request $request)
@@ -74,6 +76,43 @@ class OrdersController extends BaseController
     {
         $last_data = $this->order_service->processOweSearch($request);
 
+        //check export or not
+        $result = $this->export($last_data);
+        if ($result !== true) {
+            return $result;
+        }
+
         return view('order.owe', $last_data);
+    }
+
+    public function export($data_process)
+    {
+        if (!isset($data_process['search_by'])
+            || !isset($data_process['search_by']['is_export'])
+            || $data_process['search_by']['is_export'] != 1
+        ) {
+            return true;
+        }
+
+        //setting data for download
+        $this->order_export_service->settingData($data_process);
+
+        //loading data export info
+        $export_info = $data_process['export_info'] ?? [];
+
+        //download file with name
+        $name_export = $export_info['file_name']?? '';
+
+        if (empty($name_export)) {
+            $now_str = dateToday(DATE_FORMAT_YMD);
+            $name_export = "export_{$now_str}.xls";
+        }
+
+        return $this->order_export_service->download($name_export);
+    }
+
+    public function import()
+    {
+        //import
     }
 }
