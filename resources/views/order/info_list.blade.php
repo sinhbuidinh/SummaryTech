@@ -33,7 +33,7 @@
                 }
             @endphp
             <tr>
-                <td class="text-center" colspan="{{ $colspan }}">Không có đơn hàng {{ $cond_text }}</td>
+                <td class="text-center" colspan="{{ $colspan }}">Không có đơn hàng {{ $cond_text?? "" }}</td>
             </tr>
         @else
             @foreach ($orders as $index => $order)
