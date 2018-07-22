@@ -41,6 +41,22 @@
             </div>
         </div>
         <div class="row">
+            <label class="control-label col-sm-2" for="{{ $form_name }}_wood_type_id">Loại gỗ:</label>
+            <div class="col-sm-5">
+                <select name="{{ $form_name }}[wood_type_id]" id="{{ $form_name }}_wood_type_id">
+                    <option value="0">Default</option>
+                    @if (!empty($wood_type_list))
+                    @foreach ($wood_type_list as $wood_type)
+                    <option @if ($wood_type['id'] == old( $form_name .'.wood_type_id', $$form_name['wood_type_id'] ?? 0))
+                             selected="selected"
+                        @endif
+                        value="{{ $wood_type['id'] }}">{{ $wood_type['short_name'] }}</option>
+                    @endforeach
+                    @endif
+                </select>
+            </div>
+        </div>
+        <div class="row">
             <label class="control-label col-sm-2" for="{{ $form_name }}_code_name">Tên mã sản phẩm:</label>
             <div class="col-sm-5">
                 <input type="text"

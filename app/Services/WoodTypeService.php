@@ -122,6 +122,11 @@ class WoodTypeService extends BaseService
             $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_name'] = 'Nhập tên loại gỗ ép';
         }
 
+        if (empty($wood_form_data['short_name'])) {
+            $result['result'] = false;
+            $result['message'][MESSAGE_TYPE_ERROR][$this->form_name.'_short_name'] = 'Nhập tên ngắn gọn loại gỗ ép';
+        }
+
         return $result;
     }
 }

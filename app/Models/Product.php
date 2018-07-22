@@ -13,6 +13,11 @@ class Product extends BaseModel
     {
         return $this->hasOne('App\Models\ProductType', 'id', 'deck_type');
     }
+    
+    public function wood_type()
+    {
+        return $this->hasOne('App\Models\WoodType', 'id', 'wood_type_id');
+    }
 
     public function getDisplayNameAttribute()
     {
@@ -76,5 +81,15 @@ class Product extends BaseModel
                 . $width . self::SEPARATE_SIZE_PRODUCT
                 . $length . ' '
                 . $unit_size. ')';
+    }
+
+    public function getWoodTypeNameAttribute()
+    {
+        $short_name = '';
+        if (!blank($this->wood_type)) {
+            $short_name = $this->wood_type->short_name ?? '';
+        }
+
+        return $short_name;
     }
 }

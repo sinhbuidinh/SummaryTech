@@ -11,12 +11,14 @@ class ProductService extends BaseService
 {
     private $product_repository;
     private $product_type_service;
+    private $wood_type_service;
 
     public function __construct()
     {
         $this->attr_accessor = [
             'id',
             'deck_type',
+            'wood_type_id',
             'code_name',
             'is_foreign',
             'color',
@@ -42,6 +44,7 @@ class ProductService extends BaseService
         $this->product_repository = new ProductRepository();
         $this->product_type_repository = new ProductTypeRepository();
         $this->product_type_service = getService('product_type_service');
+        $this->wood_type_service = getService('wood_type_service');
     }
     
     public function deleteProduct($product_id)
@@ -103,6 +106,7 @@ class ProductService extends BaseService
             '`order` DESC'
         ];
         $last_data['product_type_list'] = $this->product_type_service->getListProductType([], $order);
+        $last_data['wood_type_list'] = $this->wood_type_service->getListWoodType([]);
 
         if (!empty($last_data[$this->form_name]) 
             && $request->isMethod('post')
