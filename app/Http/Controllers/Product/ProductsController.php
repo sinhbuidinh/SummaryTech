@@ -10,12 +10,14 @@ class ProductsController extends BaseController
 {
     private $product_service;
     private $product_type_service;
+    private $wood_type_service;
 
     public function __construct()
     {
         parent::__construct();
         $this->product_service      = getService('product_service');
         $this->product_type_service = getService('product_type_service');
+        $this->wood_type_service    = getService('wood_type_service');
     }
 
     public function edit(Request $request)
@@ -125,5 +127,58 @@ class ProductsController extends BaseController
         $data = $this->product_type_service->processData($request);
 
         return view('product.type.create', $data);
+    }
+    
+    public function woodTypeCreate(Request $request)
+    {
+        $data = $this->wood_type_service->processData($request);
+        if ( isset($data['result_insert'])
+            && $data['result_insert'] == true
+        ) {
+            return redirect(route('product_wood_type_list'));
+        }
+
+        return view('product.wood.create', $data);
+    }
+    
+    public function woodTypeList()
+    {
+        $data['list'] = $this->wood_type_service->getListWoodType();
+
+        //display all product
+        return view('product.wood.show', $data);
+    }
+    
+    public function woodTypeEdit(Request $request)
+    {
+        $request_data = $request->all();
+        $wood_type_id = old('wood_type_form.id', old('wood_type_id', $request_data['wood_type_id']?? null));
+
+        if (empty($wood_type_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $data = $this->wood_type_service->processData($request);
+
+        return view('product.wood.create', $data);
+    }
+    
+    public function woodTypeDelete(Request $request)
+    {
+        $request_data = $request->all();
+        $wood_type_id = old('wood_type_form.id', old('wood_type_id', $request_data['wood_type_id']?? null));
+
+        if (empty($wood_type_id)) {
+            throw new Exception('Invalid input');
+        }
+
+        $assign_data = $this->wood_type_service->deleteProductWoodType($wood_type_id);
+        if ($assign_data == true) {
+            return redirect(route('product_wood_type_list'));
+        } else {
+            $assign_data = $this->wood_type_service->processData($request);
+        }
+
+        return view('product.wood.create', $assign_data);
     }
 }

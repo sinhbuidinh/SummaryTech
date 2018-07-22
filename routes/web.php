@@ -40,6 +40,12 @@ Route::prefix('product')->namespace('Product')->name('product')->group(function 
 
     Route::get('/create_type', 'ProductsController@createType')->name('_create_type');
     Route::post('/create_type', 'ProductsController@createType')->name('_create_type_post');
+
+    Route::get('/wood_type/list', 'ProductsController@woodTypeList')->name('_wood_type_list');
+    Route::get('/wood_type/edit', 'ProductsController@woodTypeEdit')->name('_wood_type_edit');
+    Route::get('/wood_type/delete', 'ProductsController@woodTypeDelete')->name('_wood_type_delete');
+    Route::get('/wood_type/create', 'ProductsController@woodTypeCreate')->name('_wood_type_create');
+    Route::post('/wood_type/create', 'ProductsController@woodTypeCreate')->name('_wood_type_create_post');
 });
 
 Route::prefix('customer')->namespace('Customer')->name('customer')->group(function () {
@@ -67,13 +73,15 @@ Route::prefix('order')->namespace('Order')->name('order')->group(function () {
 
     Route::get('/edit', 'OrdersController@edit')->name('_edit');
     Route::get('/delete', 'OrdersController@delete')->name('_delete');
-    
+
     Route::get('/owe', 'OrdersController@owe')->name('_owe');
     Route::post('/owe', 'OrdersController@owe')->name('_owe_post');
 
     Route::get('/create', 'OrdersController@create')->name('_create');
     Route::post('/create', 'OrdersController@create')->name('_create_post');
-    
+
     Route::post('/export', 'OrdersController@export')->name('_export');
+    Route::get('/import', 'OrdersController@import')->name('_import');
+    Route::post('/import', 'OrdersController@import')->name('_import_post');
 });
 

@@ -28,6 +28,10 @@
         <a class="product_manager child type_edit {{ classOfLeftMenu('product_type_edit') }}"
            href="#">Chỉnh sửa loại ván</a>
         @endif
+        <a class="product_manager child wood_type_list {{ classOfLeftMenu('product_wood_type_list') }}"
+           href="{{ route('product_wood_type_list') }}">Danh sách loại gỗ</a>
+        <a class="product_manager child create_wood_type {{ classOfLeftMenu('product_wood_type_create') }}"
+           href="{{ route('product_wood_type_create') }}">Tạo loại gỗ</a>
         <h2 id="customer_manager" class="left"><span class="left_h2">Customer Manager</span></h2>
         <a class="customer_manager child list {{ classOfLeftMenu('customer_list') }}"
            href="{{ route('customer_list') }}">Danh sách khách hàng</a>

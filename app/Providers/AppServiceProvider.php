@@ -32,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('member_service', 'App\Services\MemberService');
         $this->app->bind('order_service', 'App\Services\OrderService');
         $this->app->bind('order_export_service', 'App\Services\OrderExportService');
+        $this->app->bind('wood_type_service', 'App\Services\WoodTypeService');
     }
 }
