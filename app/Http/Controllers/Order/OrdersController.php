@@ -10,12 +10,14 @@ class OrdersController extends BaseController
 {
     private $order_service;
     private $order_export_service;
+    private $order_import_service;
 
     public function __construct()
     {
         parent::__construct();
         $this->order_service = getService('order_service');
         $this->order_export_service = getService('order_export_service');
+        $this->order_import_service = getService('order_import_service');
     }
 
     public function create(Request $request)
@@ -111,8 +113,11 @@ class OrdersController extends BaseController
         return $this->order_export_service->download($name_export);
     }
 
-    public function import()
+    public function import(Request $request)
     {
         //import
+        $data = $this->order_import_service->processImportOrder($request);
+
+        return view('order.import', $data);
     }
 }

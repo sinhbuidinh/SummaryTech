@@ -8,8 +8,6 @@ use App\Repositories\OrderProductRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-use Maatwebsite\Excel\Facades\Excel;
-
 class OrderService extends BaseService
 {
     private $order_repository;
@@ -439,7 +437,7 @@ class OrderService extends BaseService
 
         return $result_search;
     }
-    
+
     private function searchBySql($input)
     {
         $sql = 'SELECT *'
@@ -471,10 +469,5 @@ class OrderService extends BaseService
         $sql .= $where;
 
         return $sql;
-    }
-
-    public function processImportOrder($request)
-    {
-        dd($request->all());
     }
 }
