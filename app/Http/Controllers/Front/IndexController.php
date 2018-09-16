@@ -9,6 +9,7 @@ class IndexController extends BaseController
 {
     public function front(Request $request)
     {
-        dd(__FILE__, __LINE__, $request->all());
+        $data = $request->all();
+        return view('front.index', $data);
     }
 }
