@@ -10,16 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('')->namespace('Front')->name('front')->group(function () {
+    Route::get('', 'IndexController@front')->name('index');
 });
 
-Route::get('/ddd', 'DomainDrivenDesignController@index')->name('ddd');
-
-Route::prefix('article')->namespace('Article')->name('article')->group(function () {
-    Route::get('create_type', 'ArticleTypeController@create')->name('_create_type');
-    Route::post('create_type', 'ArticleTypeController@create')->name('_create_type');
-
-    Route::get('', 'ArticleTypeController@index')->name('_list_type');
+Route::prefix('')->namespace('Back')->name('back')->group(function () {
+    Route::get('admin', 'IndexController@back')->name('index');
 });
