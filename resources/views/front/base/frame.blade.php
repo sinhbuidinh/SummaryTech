@@ -6,6 +6,7 @@
     <meta name="robots" content="noindex,follow">
     <link rel="stylesheet" href="{{ asset('css/zona/header_image.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/zona/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/zona/footer.css') }}" />
 </head>
 
 <body class="home page-template-default page front-page has-header-image page-two-column colors-light">
