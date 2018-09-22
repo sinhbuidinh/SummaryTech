@@ -4,15 +4,9 @@
 @section('title_page', 'Quản lý bài viết')
 
 @section('custom_style')
-    <link rel="stylesheet" href="{{ asset('css/dropdown.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/general/select2.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/order/create.css') }}" />
 @endsection
 
 @section('custom_script')
-    <script src="{{ asset('js/general/select2.full.min.js') }}"></script>
-    <script src="{{ asset('js/order/create.js') }}"></script>
-    <script src="{{ asset('js/order/show.js') }}"></script>
 @endsection
 
 @section('content')
@@ -35,6 +29,16 @@
                             name="{{ $form_name }}[content]"
                             placeholder="Enter content here..."
                             rows="4" cols="50">{{ old( $form_name .'[content]', '') }}</textarea>
+            </div>
+        </div>
+        <div class="row">
+            <label id="label_{{ $form_name }}_content" class="control-label col-sm-1" for="{{ $form_name }}_content">Nội dung:</label>
+            <div class="col-sm-7">
+                <textarea class="form-control" id="summary-ckeditor"></textarea>
+                <script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
+                <script>
+                    CKEDITOR.replace('summary-ckeditor');
+                </script>
             </div>
         </div>
         <!--  button -->
