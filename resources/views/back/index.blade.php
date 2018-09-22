@@ -23,21 +23,37 @@
                value="{{ old( $form_name .'[id]', $$form_name['id'] ?? '') }}"
                />
         <div class="row">
-            <label id="label_{{ $form_name }}_content" class="control-label col-sm-3" for="{{ $form_name }}_content">Nội dung:</label>
-            <div class="col-sm-7">
-                <textarea id="{{ $form_name }}_content"
-                            name="{{ $form_name }}[content]"
-                            placeholder="Enter content here..."
-                            rows="4" cols="50">{{ old( $form_name .'[content]', '') }}</textarea>
+            <label id="label_{{ $form_name }}_content" class="control-label col-sm-2">Loại hiển thị:</label>
+            <div class="col-sm-2">
+                <label><input type="radio" name="{{ $form_name }}[column_type]" value="1" /> 1 Côt</label>
+                <label><input type="radio" name="{{ $form_name }}[column_type]" value="2" /> 2 Côt</label>
             </div>
         </div>
         <div class="row">
-            <label id="label_{{ $form_name }}_content" class="control-label col-sm-1" for="{{ $form_name }}_content">Nội dung:</label>
+            <label id="label_{{ $form_name }}_content" class="control-label col-sm-2">Nội dung:</label>
             <div class="col-sm-7">
-                <textarea class="form-control" id="summary-ckeditor"></textarea>
+                <textarea class="form-control" name="{{ $form_name }}[content]" id="content"></textarea>
                 <script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
                 <script>
-                    CKEDITOR.replace('summary-ckeditor');
+                    CKEDITOR.replace('content');
+                </script>
+            </div>
+        </div>
+        <div class="row">
+            <label id="label_{{ $form_name }}_content" class="control-label col-sm-2">Nội dung trái:</label>
+            <div class="col-sm-7">
+                <textarea class="form-control" name="{{ $form_name }}[content_left]" id="content_left"></textarea>
+                <script>
+                    CKEDITOR.replace('content_left');
+                </script>
+            </div>
+        </div>
+        <div class="row">
+            <label id="label_{{ $form_name }}_content" class="control-label col-sm-2">Nội dung phải:</label>
+            <div class="col-sm-7">
+                <textarea class="form-control" name="{{ $form_name }}[content_right]" id="content_left"></textarea>
+                <script>
+                    CKEDITOR.replace('content_right');
                 </script>
             </div>
         </div>
