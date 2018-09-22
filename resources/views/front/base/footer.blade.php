@@ -7,14 +7,19 @@
                     <div class="textwidget">
                         <p>
                             <strong>Địa chỉ:</strong>
-                            <br/> Chợ Triển, xã mỹ thái
-                            <br/> Huyện Lạng Giang, tỉnh Bắc Giang
+                            <br/> Thầy Loan, cổng chùa Cầu, Xã Mỹ Thái
+                            <br/> Huyện Lạng Giang, Tỉnh Bắc Giang
                         </p>
                         <p>
                             <strong>Giờ làm việc:</strong>
                             <br> <b>T2—T6:</b> 9:00–17:00
                             <br> <b>T7 &amp; CN:</b> 11:00–15:00
                         </p>
+						<p>
+							<strong>Nguyễn quốc Loan</strong>
+							<br>
+							<strong>Sđt:<strong> 039.290.8306
+						</p>
                     </div>
                 </section>
             </div>
@@ -28,12 +33,6 @@
             </div>
         </aside>
         <!-- .widget-area -->
-
-        <div class="site-info">
-            <!-- https://www.facebook.com/bluestart9d/about?lst=100001785102571%3A100001785102571%3A1536376367 -->
-            <a href="https://goo.gl/dXfwjp" class="imprint">Powered by SINHBD</a>
-        </div>
-        <!-- .site-info -->
     </div>
     <!-- .wrap -->
 </footer>

@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/zona/footer.css') }}" />
 </head>
 
-<body class="home page-template-default page front-page has-header-image page-two-column colors-light">
+<body class="home page-template-default page front-page has-header-image page-two-column colors-light"
+      @yield('function_load')>
     <div id="page" class="site">
         <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
         @include('front.base.header')
@@ -19,5 +20,6 @@
             @include('front.base.footer')
         </div>
     </div>
+	@yield('custom_style')
 </body>
 </html>
