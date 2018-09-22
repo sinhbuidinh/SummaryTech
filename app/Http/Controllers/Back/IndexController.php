@@ -9,6 +9,9 @@ class IndexController extends BaseController
 {
     public function back(Request $request)
     {
-        dd(__FILE__, __LINE__, $request->all());
+        $data = $request->all();
+        $data['form_name'] = 'manager_article';
+
+        return view('back.index', $data);
     }
 }

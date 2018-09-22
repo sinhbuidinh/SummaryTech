@@ -10,10 +10,10 @@
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
             @include('front.base_panel.article', [
-                'id'         => $id,
-                'title'      => $title,
-                'left_data'  => $left_data,
-                'right_data' => $right_data,
+                'id'    => $id,
+                'type'  => $type,
+                'title' => $title,
+                'data'  => $article_data,
             ])
         </main>
     </div>
