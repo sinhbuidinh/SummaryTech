@@ -12,8 +12,8 @@ class IndexController extends BaseController
         $data = $request->all();
         $data['id'] = 1;
         $data['title'] = 'Dấu hiệu nhận biết';
-        $data['type'] = '2column';
-        $data['article_data']['left_data'] = '<li>
+        $data['type'] = 1;
+        $data['content_left'] = '<li>
                         <span class="bold_txt">Giai đoạn 1:</span>
                         <br>
                         <span>+ Biểu hiện đỏ rát.</span>
@@ -36,7 +36,7 @@ class IndexController extends BaseController
                         <span>+ Biểu hiện giống bị cắn trong da, thịt, bỏng rát trong cơ thể.</span>
                         <br>
                     </li>';
-        $data['article_data']['right_data'] = '<img src="img/sign.jpg" />
+        $data['content_right'] = '<img src="img/sign.jpg" />
                     <span><b class="none">Ví dụ:</b> Mắt, phổi, gần tim, quanh vùng ngực, vùng bụng, sau lung ….. </span>
                     <span><strong class="none">Chú ý:</strong> Chụp XQuang thì người bệnh cũng không được xác định bị mắc bệnh gì.</span>';
 

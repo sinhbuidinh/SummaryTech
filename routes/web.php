@@ -16,4 +16,5 @@ Route::prefix('')->namespace('Front')->name('front')->group(function () {
 
 Route::prefix('')->namespace('Back')->name('back')->group(function () {
     Route::get('admin', 'IndexController@back')->name('index');
+    Route::post('admin', 'ArticleController@create')->name('_article_create');
 });
