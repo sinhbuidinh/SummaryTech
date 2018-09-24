@@ -12,10 +12,9 @@ class ArticleService extends BaseService
         $this->article_repository = new ArticleRepository();
     }
     
-    public function getArticleTypeList()
+    public function getArticleList()
     {
-        $data['list'] = $this->article_repository->listAll();
-        return $data;
+        return $this->article_repository->listAll();
     }
     
     public function createOrUpdate($form_data)

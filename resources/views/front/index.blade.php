@@ -6,16 +6,22 @@
 @endsection
 
 @section('content')
-<div id="content" class="site-content">
-    <div id="primary" class="content-area">
-        <main id="main" class="site-main" role="main">
-            @include('front.base_panel.article', [
-                'id'    => $id,
-                'type'  => $type,
-                'title' => $title,
-                'data'  => $article_data,
-            ])
-        </main>
+    @foreach($articles as $article)
+    <div id="content" class="site-content">
+        <div id="primary" class="content-area">
+            <main id="main" class="site-main" role="main">
+                @include('front.base_panel.article', [
+                    'id'    => data_get($article, 'id'),
+                    'type'  => data_get($article, 'column_type'),
+                    'title' => data_get($article, 'title'),
+                    'data'  => [
+                        'content'       => data_get($article, 'content'),
+                        'content_left'  => data_get($article, 'content_left'),
+                        'content_right' => data_get($article, 'content_right')
+                    ],
+                ])
+            </main>
+        </div>
     </div>
-</div>
+    @endforeach
 @endsection
