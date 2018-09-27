@@ -122,7 +122,7 @@ h5:first-child, h6:first-child {
 
 body.has-header-image .site-title,
 body.has-header-image .site-title a{
-    color: #fff;
+    color: #057c82;
 }
 
 .custom-header-media:before {
@@ -203,7 +203,7 @@ body.has-header-image .site-title a{
 }
 
 body.has-header-image .site-description {
-    color: #fff;
+    color: #057c82;
     opacity: 0.8;
 }
 
@@ -468,5 +468,10 @@ button, input {
         width: 100%;
         z-index: 3;
     }
+}
+
+.initial {
+    display: initial !important;
+    box-sizing: initial !important;
 }
 
