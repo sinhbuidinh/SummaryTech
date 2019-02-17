@@ -25,4 +25,12 @@ class ArticleController extends BaseController
 
         return view('back.index', $data);
     }
+    
+    public function listArticle()
+    {
+        $data['list'] = $this->article_service->getArticleList();
+        $data['form_name'] = 'article_list';
+        
+        return view('back.article.list', $data);
+    }
 }
