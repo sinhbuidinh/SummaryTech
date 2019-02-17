@@ -1,0 +1,17 @@
+.site-content h2 {
+    padding: 2px 2px 2px 15px;
+    color: #AA4C00;
+    font-size: 15px;
+    text-transform: uppercase;
+    display: inherit;
+    margin: 10px 0px;
+    border-bottom: 1px solid #AA4C00;
+}
+
+.left {
+    width: 70% !important;
+}
+
+.right {
+    width: 30% !important;
+}

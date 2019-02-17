@@ -1,0 +1,80 @@
+footer {
+    display: block;
+}
+
+.site-footer {
+    border-top: 1px solid #eee;
+}
+
+.site-footer .wrap {
+    padding-bottom: 1.5em;
+    padding-top: 2em;
+}
+
+.site-footer .widget-area {
+    padding-bottom: 2em;
+    padding-top: 2em;
+}
+
+.widget_text {
+    word-wrap: break-word;
+}
+
+.widget {
+    padding-bottom: 0em;
+}
+
+h2.widget-title {
+    color: #222;
+    font-size: 13px;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.1818em;
+    margin-bottom: 1.5em;
+    text-transform: uppercase;
+    padding-top: 0;
+}
+
+.site-info {
+    font-size: 14px;
+    font-size: 0.875rem;
+    margin-bottom: 1em;
+}
+
+.site-info a {
+    webkit-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 1);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 1);
+    text-decoration: none;
+    -webkit-transition: color 80ms ease-in, -webkit-box-shadow 130ms ease-in-out;
+    transition: color 80ms ease-in, -webkit-box-shadow 130ms ease-in-out;
+    transition: color 80ms ease-in, box-shadow 130ms ease-in-out;
+    transition: color 80ms ease-in, box-shadow 130ms ease-in-out, -webkit-box-shadow 130ms ease-in-out;
+    color: #666;
+}
+
+@media screen and (min-width: 48em) {
+    .site-footer {
+        font-size: 14px;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-top: 3em;
+    }
+    .site-footer .widget-column.footer-widget-1 {
+        float: left;
+        width: 36%;
+    }
+    .site-footer .widget-column.footer-widget-2 {
+        float: right;
+        width: 58%;
+    }
+    h2.widget-title {
+        font-size: 11px;
+        font-size: 0.6875rem;
+        margin-bottom: 2em;
+    }
+    .site-info {
+        float: left;
+        padding: 0.7em 0 0;
+        width: 58%;
+    }
+}
